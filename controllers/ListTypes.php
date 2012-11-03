@@ -2,9 +2,9 @@
 /*+**********************************************************************************
  * The contents of this file are subject to the vtiger CRM Public License Version 1.0
  * ("License"); You may not use this file except in compliance with the License
- * The Original Code is:  vtiger CRM Open Source
- * The Initial Developer of the Original Code is vtiger.
- * Portions created by vtiger are Copyright (C) vtiger.
+ * The Original Code is:  JPL TSolucio, S.L Open Source
+ * The Initial Developer of the Original Code is JPL TSolucio, S.L.
+ * Portions created by JPL TSolucio, S.L are Copyright (C) JPL TSolucio, S.L.
  * All Rights Reserved.
  ************************************************************************************/
 class ListTypes_Controller {
@@ -48,7 +48,7 @@ class ListTypes_Controller {
 
 		if($login) {
 
-			$modules = $client->doListTypes($query);
+			$modules = $client->doListTypes();
 
 			if($modules) {
 				echo "<table cellpadding='3' cellspacing='0' class='listing'>";
