@@ -79,11 +79,11 @@ class Vtiger_WSClient {
 	 * Check if result has any error.
 	 */
 	function hasError($result) {
-		if(isset($result[success]) && $result[success] === true) {
+		if(isset($result['success']) && $result['success'] === true) {
 			$this->_lasterror = false;
 			return false;
 		}
-		$this->_lasterror = $result[error];
+		$this->_lasterror = $result['error'];
 		return true;
 	}
 
@@ -109,9 +109,9 @@ class Vtiger_WSClient {
 			return false;
 		}
 
-		$this->_servertime   = $resultdata[result][serverTime];
-		$this->_expiretime   = $resultdata[result][expireTime];
-		$this->_servicetoken = $resultdata[result][token];
+		$this->_servertime   = $resultdata['result']['serverTime'];
+		$this->_expiretime   = $resultdata['result']['expireTime'];
+		$this->_servicetoken = $resultdata['result']['token'];
 		return true;
 	}
 
@@ -158,8 +158,8 @@ class Vtiger_WSClient {
 		$this->_serviceuser = $username;
 		$this->_servicekey  = $vtigerUserAccesskey;
 
-		$this->_sessionid = $resultdata[result][sessionName];
-		$this->_userid    = $resultdata[result][userId];
+		$this->_sessionid = $resultdata['result']['sessionName'];
+		$this->_userid    = $resultdata['result']['userId'];
 		return true;
 	}
 
@@ -183,7 +183,7 @@ class Vtiger_WSClient {
 		if($this->hasError($resultdata)) {
 			return false;
 		}
-		return $resultdata[result];
+		return $resultdata['result'];
 	}
 
 	/**
@@ -213,7 +213,7 @@ class Vtiger_WSClient {
 		if($this->hasError($resultdata)) {
 			return false;
 		}		
-		$modulenames = $resultdata[result][types];
+		$modulenames = $resultdata['result']['types'];
 
 		$returnvalue = Array();
 		foreach($modulenames as $modulename) {
@@ -221,22 +221,6 @@ class Vtiger_WSClient {
 				Array ( 'name' => $modulename );
 		}		
 		return $returnvalue;
-	}
-
-	function doAddRelation() {
-		// Perform re-login if required.
-		$this->__checkLogin();
-
-		$getdata = Array(
-			'operation' => 'addrelatedlists',
-			'sessionName'  => $this->_sessionid,
-		    'entityId'=>'3@2'
-		);
-		$resultdata = $this->_client->doGet($getdata, true);
-		if($this->hasError($resultdata)) {
-			return false;
-		}		
-		return $resultdata;
 	}
 
 	/**
@@ -255,7 +239,7 @@ class Vtiger_WSClient {
 		if($this->hasError($resultdata)) {
 			return false;
 		}		
-		return $resultdata[result];
+		return $resultdata['result'];
 	}
 
 	/**
@@ -274,7 +258,7 @@ class Vtiger_WSClient {
 		if($this->hasError($resultdata)) {
 			return false;
 		}		
-		return $resultdata[result];
+		return $resultdata['result'];
 	}
 
 	/**
@@ -299,7 +283,7 @@ class Vtiger_WSClient {
 		if($this->hasError($resultdata)) {
 			return false;
 		}		
-		return $resultdata[result];
+		return $resultdata['result'];
 	}
 
 	/**
@@ -335,7 +319,32 @@ class Vtiger_WSClient {
 		if($this->hasError($resultdata)) {
 			return false;
 		}
-		return $resultdata[result];
+		return $resultdata['result'];
 	}	
+	function doUpdate($module, $valuemap, $doRegAccesoUpdate=true) {
+		// Perform re-login if required.
+		$this->__checkLogin();
+
+		if ($doRegAccesoUpdate) {
+			User::actualizaRegistroAcceso($this, 'actualización');
+		}
+
+		// Assign record to logged in user if not specified
+		if(!isset($valuemap['assigned_user_id'])) {
+			$valuemap['assigned_user_id'] = $this->_userid;
+		}
+
+		$postdata = Array(
+			'operation'   => 'update',
+			'sessionName' => $this->_sessionid,
+			'elementType' => $module,
+			'element'     => $this->toJSONString($valuemap)
+		);
+		$resultdata = $this->_client->doPost($postdata, true);
+		if($this->hasError($resultdata)) {
+			return false;
+		}
+		return $resultdata['result'];
+	}
 }
 ?>

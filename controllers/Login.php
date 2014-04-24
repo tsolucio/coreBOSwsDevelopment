@@ -15,7 +15,7 @@ class Login_Controller {
 		$username = $request['username'];
 		$accesskey = $request['accesskey'];
 		
-		if(empty($url)) $url = 'http://en.vtiger.com';
+		if(empty($url)) $url = 'http://localhost/';
 		if(empty($username)) $username = 'admin';
 		
 
@@ -28,7 +28,6 @@ class Login_Controller {
 			if($checkLogin) {
 				Session_Controller::setLoginContext($loginModel);
 				header('Location: index.php');
-				echo "HERE";
 				exit;
 				//return;
 			}
@@ -49,7 +48,7 @@ class Login_Controller {
 			</tr>
 			<tr>
 				<td>Access key</td>
-				<td><input type='password' name='accesskey' value='$accesskey' size=40></td>
+				<td><input type='text' name='accesskey' value='$accesskey' size=40></td>
 			</tr>			
 			<tr>
 				<td colspan=2><input type='submit' value='Login' name='__submitButton'></td>

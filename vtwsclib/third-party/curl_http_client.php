@@ -253,7 +253,6 @@ class Curl_HTTP_Client
 
 		//and finally send curl request
 		$result = curl_exec($this->ch);
-
 		if(curl_errno($this->ch))
 		{
 			if($this->debug)
