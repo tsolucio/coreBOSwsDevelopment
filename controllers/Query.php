@@ -5,6 +5,7 @@
  * The Original Code is:  vtiger CRM Open Source
  * The Initial Developer of the Original Code is vtiger.
  * Portions created by vtiger are Copyright (C) vtiger.
+ * Portions created by JPL TSolucio, S.L are Copyright (C) JPL TSolucio, S.L.
  * All Rights Reserved.
  ************************************************************************************/
 class Query_Controller {
@@ -15,16 +16,13 @@ class Query_Controller {
 
 		$escapedQuery = $query;
 		echo "
-		<form method='POST' action='index.php'>
-		<input type='submit' value='ListTypes' name='__submitButton'></br>
-		</form>
 		<form method='POST' action='index.php' onsubmit='return validateForm(this);'>
 			<table cellpadding='0' cellspacing='1'>
 				<tr valign=top>
 					<td>Query like: select firstname, lastname from Leads;<br/><textarea name='q' rows='5' cols='80'>$escapedQuery</textarea></td>
 				</tr>
 				<tr>
-					<td><input type='submit' value='Execute' name='__submitButton'></td>
+					<td><input type='submit' value='Execute &raquo;' name='__submitButton' class='btn btn-primary btn-large'></td>
 				</tr>
 			</table>
 		</form>";
@@ -40,7 +38,7 @@ class Query_Controller {
 				$result = $client->doQuery($query);
 
 				if($result) {
-					echo "<table cellpadding='3' cellspacing='0' class='listing'>";
+					echo "<table cellpadding='3' cellspacing='0' class='table table-striped small'>";
 
 					$columns = $client->getResultColumns($result);
 						

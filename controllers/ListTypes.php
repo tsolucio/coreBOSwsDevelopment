@@ -10,37 +10,6 @@
 class ListTypes_Controller {
 
 	function process($request) {
-		echo "
-		<style type='text/css'>
-		<!--
-		.toolTip {
-			position:absolute;
-			left:40%;
-			/* top:0; */
-			display:none;
-			/*Making it look pretty*/
-			width:200px;
-			padding:5px;
-			border:1px solid #ffffff;
-			background-color:#eeeeee;
-			font:10px/12px Arial, Helvetica, sans-serif;
-		}
-		-->
-		</style>
-		<form method='POST' action='index.php'>
-		<input type='submit' value='ListTypes' name='__submitButton'></br>
-		</form>
-		<form method='POST' action='index.php' onsubmit='return validateForm(this);'>
-			<table cellpadding='0' cellspacing='1'>
-				<tr valign=top>
-					<td>Query like: select firstname, lastname from Leads;<br/><textarea name='q' rows='5' cols='80'>$escapedQuery</textarea></td>
-				</tr>
-				<tr>
-					<td><input type='submit' value='Execute' name='__submitButton'></td>
-				</tr>
-			</table>
-		</form>";
-
 		$loginModel = Session_Controller::getLoginContext();
 		
 		$client = new Vtiger_WSClient($loginModel->getURL());
@@ -51,51 +20,78 @@ class ListTypes_Controller {
 			$modules = $client->doListTypes();
 
 			if($modules) {
-				echo "<table cellpadding='3' cellspacing='0' class='listing'>";
-				echo "<tr><th>Modules</th><th>Can Create</th><th>Can Update</th><th>Can Delete</th><th>Can Retrieve</th><th>Fields</th></tr>";
-				$i=0;
+				
+				$modOptions = '';
 				foreach($modules as $module) {
+					$modOptions.= "<option value='".$module['name']."'>".$module['name']."</option>";
+				}
+				foreach($modules as $module) {
+					echo "<div class='row' id='".$module['name']."' style='vertical-align:bottom;'><span class='span5 pull-left'><h3>".$module['name']."</h3></span>";
+					echo "<span class='span1 pull-right' style='margin-left:10px;margin-right:60px;margin-top: 30px;'>";
+					echo "<a href='#top'><img src='assets/go_top.png'></a>";
+					echo "</span>";
+					echo "<span class='span4 pull-right' style='margin-top: 30px;'>";
+					echo "<select onchange=\"\$('.modqaselect').val(this.value);document.location='#'+this.value\" class='small modqaselect'>".$modOptions."</select>";
+					echo "</span>";
+					echo "</div>";
+					echo "<table class='table table-striped small table-condensed'>";
+					echo "<tr><th>REST ID</th><th>Can Create</th><th>Can Update</th><th>Can Delete</th><th>Can Retrieve</th></tr>";
 					echo "<tr>";
 					$desc=$client->doDescribe($module['name']);
-					echo sprintf("<td nowrap='nowrap'>%s</td>", $module['name'].' ('.$desc['idPrefix'].')');
+					echo sprintf("<td nowrap='nowrap'>%s</td>", $desc['idPrefix'].'x');
 					echo sprintf("<td nowrap='nowrap'>%s&nbsp;</td>", $desc['createable']);
 					echo sprintf("<td nowrap='nowrap'>%s&nbsp;</td>", $desc['updateable']);
 					echo sprintf("<td nowrap='nowrap'>%s&nbsp;</td>", $desc['deleteable']);
 					echo sprintf("<td nowrap='nowrap'>%s&nbsp;</td>", $desc['retrieveable']);
-					echo "<td nowrap='nowrap'>";
+					echo "</tr></table>";
+					echo "<table class='table table-striped small table-condensed'>";
+					echo "<tr><th>Field</th><th>Information</th><th>Block</th><th>Type</th><th width='30%'>Reference/Values</th></tr>";
 					foreach ($desc['fields'] as $field){
-					$ttname="tt$i";  $i++;
-					$fieldname=$field['label'];
-					$fielddesc="<b>$fieldname</b><br>Field: ".$field['name']."<br>Mandatory: ";
-					$fielddesc.=($field['name'] ? 'yes' : 'no')."<br>Null: ".($field['nullable'] ? 'yes' : 'no');
-					$fielddesc.="<br>Editable: ".($field['editable'] ? 'yes' : 'no')."<br>Default: ".$field['default'];
-					$fielddesc.="<br>Type: ".$field['type']['name']."<br>Format: ".$field['type']['format'];
-					$addinfo='';
-					if (isset($field['type']['refersTo'])) {
-						$addinfo='<br>Refers To: ';
-						foreach($field['type']['refersTo'] as $capts) $addinfo.="$capts, ";
+						$fieldname=$field['label'];
+						echo "<tr><td nowrap='nowrap'><b>".$fieldname.'</b><br>'.$field['name'].'</td>';
+						echo "<td>";
+						$fielddesc="Mandatory: ";
+						$fielddesc.=($field['name'] ? 'yes' : 'no')."<br>Null: ".($field['nullable'] ? 'yes' : 'no');
+						$fielddesc.="<br>Editable: ".($field['editable'] ? 'yes' : 'no');
+						if (isset($field['sequence'])) $fielddesc.="<br>Sequence: ".$field['sequence'];
+						echo $fielddesc."</td><td>";
+						if (isset($field['block'])) {
+							
+						}
+						echo "</td><td>";
+						$fielddesc="Type: ".$field['type']['name'];
+						if (isset($field['uitype'])) $fielddesc.="<br>UIType: ".$field['uitype'];
+						$fielddesc.="<br>Format: ".$field['type']['format']."<br>Default: ".$field['default'];
+						echo $fielddesc.'</td><td>';
+						$addinfo='';
+						if (isset($field['type']['refersTo'])) {
+							foreach($field['type']['refersTo'] as $capts) $addinfo.="$capts, ";
+						}
+						if (isset($field['type']['picklistValues'])) {
+							foreach($field['type']['picklistValues'] as $plvs=>$plvn) $addinfo.=$plvn['value'].", ";
+						}
+						echo $addinfo.'</td>';
+						//echo "<div onmouseover=\"document.getElementById('$ttname').style.display='block'\" onmouseout=\"document.getElementById('$ttname').style.display='none'\"><div id=\"$ttname\" class=\"toolTip\">$fielddesc</div>$fieldname,&nbsp;</div>";
+						//echo '<div data-toggle="tooltip" data-placement="left" title="'.$fielddesc.'">'.$fieldname.',&nbsp;</div>';
+						echo "</tr>";
 					}
-					if (isset($field['type']['picklistValues'])) {
-						$addinfo='<br>Picklist values: ';
-						foreach($field['type']['picklistValues'] as $plvs=>$plvn) $addinfo.=$plvn['value'].", ";
-						$addinfo.="<br>Default: ".$field['type']['default'];
-					}
-					$fielddesc.=$addinfo;
-					echo "<div onmouseover=\"document.getElementById('$ttname').style.display='block'\" onmouseout=\"document.getElementById('$ttname').style.display='none'\"><div id=\"$ttname\" class=\"toolTip\">$fielddesc</div>$fieldname,&nbsp;</div>";
-					}
-					echo "</td>";
-					echo "</tr>";
+					echo "</table>";
 				}
-				echo "</table>";
 			} else {
 				$lastError = $client->lastError();
 				echo "<span class='error'>ERROR: " . $lastError['message'] . "</span>";
 			}
-
-
 		} else {
 			echo "<span class='error'>ERROR: Login failure!<span>";
 		}
+	}
+
+	function outputScript() {
+		echo <<<EOT
+		<script type='text/javascript'>
+		function gotoModule() {
+		
+EOT;
 	}
 }
 ?>

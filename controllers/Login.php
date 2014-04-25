@@ -5,6 +5,7 @@
  * The Original Code is:  vtiger CRM Open Source
  * The Initial Developer of the Original Code is vtiger.
  * Portions created by vtiger are Copyright (C) vtiger.
+ * Portions created by TSolucio are Copyright (C) TSolucio.
  * All Rights Reserved.
  ************************************************************************************/
 class Login_Controller {
@@ -34,33 +35,26 @@ class Login_Controller {
 		}
 		
 		Header_Controller::process($request);
-		echo "
+		?>
 		<form method='POST' action='index.php' onsubmit='this.__submitButton.value=\"Verifying\"; this.__submitButton.disabled=true;'>
-		
-		<table cellpadding=5 cellspacing=0>
-			<tr>
-				<td>URL</td>
-				<td><input type='text' name='url' value='$url' size=40></td>
-			</tr>
-			<tr>
-				<td>Username</td>
-				<td><input type='text' name='username' value='$username' size=40></td>
-			</tr>
-			<tr>
-				<td>Access key</td>
-				<td><input type='text' name='accesskey' value='$accesskey' size=40></td>
-			</tr>			
-			<tr>
-				<td colspan=2><input type='submit' value='Login' name='__submitButton'></td>
-			</tr>
-					
-		</table>		
-		
-		</form>		
-		";
-		
+		<div class='form-group'>
+			<label for='url'>URL</label>
+			<input type='text' name='url' value='<?php echo $url; ?>' size=40 class='form-control'>
+		</div>
+		<div class='form-group'>
+			<label for='username'>Username</label>
+			<input type='text' name='username' value='<?php echo $username; ?>' size=40 class='form-control'>
+		</div>
+		<div class='form-group'>
+			<label for='accesskey'>Access key</label>
+			<input type='text' name='accesskey' value='<?php echo $accesskey; ?>' size=40 class='form-control'>
+		</div>
+		<div class='form-group'>
+			<input class='btn btn-primary btn-large' type='submit' value='Login &raquo;' name='__submitButton'>
+		</div>
+		</form>
+<?php
 		Footer_Controller::process($request);
-		
 	}
 	
 }
