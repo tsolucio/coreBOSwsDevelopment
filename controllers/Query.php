@@ -59,12 +59,10 @@ class Query_Controller {
 					echo "</table>";
 				} else {
 					$lastError = $client->lastError();
-					echo "<span class='error'>ERROR: " . $lastError['message'] . "</span>";
+					echo "<div class='alert alert-danger'><strong>ERROR:</strong> " . $lastError['message'] . "</div>";
 				}
-
-
 			} else {
-				echo "<span class='error'>ERROR: Login failure!<span>";
+				echo "<div class='alert alert-danger'><strong>ERROR:</strong> Login failure!<div>";
 			}
 		}
 

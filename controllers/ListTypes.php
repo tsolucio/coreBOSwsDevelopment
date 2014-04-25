@@ -71,27 +71,18 @@ class ListTypes_Controller {
 							foreach($field['type']['picklistValues'] as $plvs=>$plvn) $addinfo.=$plvn['value'].", ";
 						}
 						echo $addinfo.'</td>';
-						//echo "<div onmouseover=\"document.getElementById('$ttname').style.display='block'\" onmouseout=\"document.getElementById('$ttname').style.display='none'\"><div id=\"$ttname\" class=\"toolTip\">$fielddesc</div>$fieldname,&nbsp;</div>";
-						//echo '<div data-toggle="tooltip" data-placement="left" title="'.$fielddesc.'">'.$fieldname.',&nbsp;</div>';
 						echo "</tr>";
 					}
 					echo "</table>";
 				}
 			} else {
 				$lastError = $client->lastError();
-				echo "<span class='error'>ERROR: " . $lastError['message'] . "</span>";
+				echo "<div class='alert alert-danger'>ERROR: " . $lastError['message'] . "</div>";
 			}
 		} else {
-			echo "<span class='error'>ERROR: Login failure!<span>";
+			echo "<div class='alert alert-danger'>ERROR: Login failure!</div>";
 		}
 	}
 
-	function outputScript() {
-		echo <<<EOT
-		<script type='text/javascript'>
-		function gotoModule() {
-		
-EOT;
-	}
 }
 ?>
