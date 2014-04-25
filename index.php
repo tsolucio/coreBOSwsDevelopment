@@ -24,23 +24,32 @@ if(Session_Controller::hasLoginContext()) {
 		case 'Logout':
 			include_once 'controllers/Logout.php';
 			Logout_Controller::process($_REQUEST);
+			Footer_Controller::process($_REQUEST);
 			break;
 		case 'ListTypes':
 			Header_Controller::process($_REQUEST);
 			include_once 'controllers/ListTypes.php';
 			ListTypes_Controller::process($_REQUEST);
+			Footer_Controller::process($_REQUEST);
 			break;
 		case 'TestCode':
 			Header_Controller::process($_REQUEST);
+			include_once 'controllers/TestCode.php';
+			TestCode_Controller::process($_REQUEST);
+			Footer_Controller::process($_REQUEST);
+			break;
+		case 'execCode':
+			include_once 'controllers/TestCode.php';
+			TestCode_Controller::doExecCode();
 			break;
 		case 'VQL':
 		default:
 			Header_Controller::process($_REQUEST);
 			include_once 'controllers/Query.php';
 			Query_Controller::process($_REQUEST);
+			Footer_Controller::process($_REQUEST);
 			break;
 	}
-	Footer_Controller::process($_REQUEST);
 } else {
 	include_once 'controllers/Login.php';
 	Login_Controller::process($_REQUEST);
