@@ -156,5 +156,21 @@ EOT;
 		echo json_encode($rdo);
 	}
 
+	function doExecCodeDirect($script) {
+		if (!empty($script)) {
+			function debugmsg($name,$var) {};
+			$loginModel = $_SESSION['vtbrowser_auth'];
+			$cbURL = $loginModel->getURL().'/webservice.php';
+			$cbUserName = $loginModel->getUsername();
+			$cbUserID = $loginModel->getUserId();
+			$cbAccessKey = $loginModel->getAccessKey();
+			$cbSessionID = $loginModel->getSessionId();
+			$cbconn = new Vtiger_WSClient($cbURL);
+			$httpc = $cbconn->_client;
+			$script = basename($script);
+			include_once 'testcode/'.$script;
+		}
+	}
+
 }
 ?>
