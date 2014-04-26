@@ -56,10 +56,15 @@ class ListTypes_Controller {
 						if (isset($field['sequence'])) $fielddesc.="<br>Sequence: ".$field['sequence'];
 						echo $fielddesc."</td><td>";
 						if (isset($field['block'])) {
-							
+							$blockddesc="ID: ".$field['block']['blockid'].'<br>';
+							$blockddesc.='Sequence: '.$field['block']['blocksequence'].'<br>';
+							$blockddesc.='Label: '.$field['block']['blocklabel'].'<br>';
+							$blockddesc.='Name: '.$field['block']['blockname'];
+							echo $blockddesc;
 						}
 						echo "</td><td>";
 						$fielddesc="Type: ".$field['type']['name'];
+						if (isset($field['typeofdata'])) $fielddesc.="&nbsp;(".$field['typeofdata'].')';
 						if (isset($field['uitype'])) $fielddesc.="<br>UIType: ".$field['uitype'];
 						$fielddesc.="<br>Format: ".$field['type']['format']."<br>Default: ".$field['default'];
 						echo $fielddesc.'</td><td>';
