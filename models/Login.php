@@ -11,6 +11,8 @@ class Login_Model {
 	private $url;
 	private $username;
 	private $accesskey;
+	private $userid;
+	private $sessionid;
 
 	function __construct($url, $username, $accesskey) {
 		$this->url = $url;
@@ -30,5 +32,20 @@ class Login_Model {
 		return $this->accesskey;
 	}
 	
+	function getUserId() {
+		return $this->userid;
+	}
+	
+	function setUserId($usrid) {
+		$this->userid = $usrid;
+	}
+	
+	function getSessionId() {
+		return $this->sessionid;
+	}
+	
+	function setSessionId($sessionid) {
+		$this->sessionid = $sessionid;
+	}
 }
 ?>

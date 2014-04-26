@@ -25,9 +25,11 @@ class Login_Controller {
 			
 			$client = new Vtiger_WSClient($loginModel->getURL());
 			$checkLogin  = $client->doLogin($loginModel->getUsername(), $loginModel->getAccessKey());
-	
+
 			if($checkLogin) {
 				Session_Controller::setLoginContext($loginModel);
+				$loginModel->setUserId($client->_userid);
+				$loginModel->setSessionId($client->_sessionid);
 				header('Location: index.php');
 				exit;
 				//return;

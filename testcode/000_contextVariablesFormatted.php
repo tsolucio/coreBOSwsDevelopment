@@ -6,7 +6,9 @@ echo '<ul>';
 // show the variables we can use in our test code
 tagLI("URL of the site we logged in with: <b>".$cbURL."</b>");
 tagLI("Username we logged in with: <b>".$cbUserName."</b>");
+tagLI("UserID we logged in with: <b>".$cbUserID."</b>");
 tagLI("Accesskey we logged in with: <b>".$cbAccessKey."</b>");
+tagLI("SessionID we logged in with: <b>".$cbSessionID."</b>");
 tagLI('cbwsLibrary connection to coreBOS: <b>$cbconn</b>');
 tagLI('http_curl connection to coreBOS: <b>$httpc</b>');
 echo '</ul>';

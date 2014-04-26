@@ -59,17 +59,13 @@ class TestCode_Controller {
 			<div class="col-lg-7 pull-left">
 				<textarea id="cbwscode" rows=50 cols=78 style="height:100px">$loadtc</textarea>
 			</div>
-			<div class="col-lg-5 pull-left" id="cbwsoutput" style="height:415px;border: solid 1px;">
-			</div>
+			<div class="col-lg-5 pull-left" id="cbwsoutput" style="height:415px;border: solid 1px;overflow: scroll;"></div>
 		</div>
 		<div class="row">
-			<div class="col-lg-1 pull-left"></div>
 			<div class="col-lg-5 pull-left"><h3>Debug</h3></div>
 		</div>
 		<div class="row">
-			<div class="col-lg-1 pull-left"></div>
-			<div class="col-lg-10 pull-left" id="cbwsdebug" style="height:300px;border: solid 1px;"></div>
-			<div class="col-lg-1 pull-left"></div>
+			<div class="col-lg-12 pull-left" id="cbwsdebug" style="height:600px;border: solid 1px;overflow: scroll;"></div>
 		</div>
 EOT;
 	}
@@ -141,7 +137,9 @@ EOT;
 		$loginModel = $_SESSION['vtbrowser_auth'];
 		$cbURL = $loginModel->getURL().'/webservice.php';
 		$cbUserName = $loginModel->getUsername();
+		$cbUserID = $loginModel->getUserId();
 		$cbAccessKey = $loginModel->getAccessKey();
+		$cbSessionID = $loginModel->getSessionId();
 		$cbconn = new Vtiger_WSClient($cbURL);
 		$httpc = $cbconn->_client;
 		$toexec = urldecode($_REQUEST['tcexec']);
