@@ -14,4 +14,5 @@ $dmsg.= debugmsg(
 	'we have a special function for debug messages which accepts complex variables',
 	array('v1'=>'value 1','v2'=>'value2')
 );
+echo "<br>You can find some more information on our wiki: <a href='http://corebos.org/documentation/doku.php?id=en:devel:corebosws:coreboswsbrowser'>coreBOSwsBrowser</a>";
 ?>
