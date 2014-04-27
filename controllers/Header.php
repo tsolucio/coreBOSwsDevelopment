@@ -63,7 +63,7 @@ class Header_Controller {
 	  <div class="collapse navbar-collapse navbar-ex1-collapse">
 	    <ul class="nav navbar-nav navbar-right">';
 		if(Session_Controller::hasLoginContext()) {
-			$rdo.= '<li><a href="index.php?action=vql">VQL</a></li>';
+			$rdo.= '<li><a href="index.php?action=vql">Query</a></li>';
 			$rdo.= '<li><a href="index.php?action=ListTypes">List Types</a></li>';
 			$rdo.= '<li><a href="index.php?action=TestCode">Test Code</a></li>';
 			$rdo.= '<li style="margin-left:40px;">&nbsp;</li>';
