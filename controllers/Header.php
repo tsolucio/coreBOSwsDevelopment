@@ -75,7 +75,10 @@ class Header_Controller {
 			<li><a href="http://corebos.org/page/contact" target="_blank">Contact</a></li>';
 		if(Session_Controller::hasLoginContext()) {
 			$loginModel = Session_Controller::getLoginContext();
-			$rdo.= sprintf("<li><a href='#'><small>Welcome <b>%s</b></small></a></li>", $loginModel->getUsername());
+			$title = 'URL: '.$loginModel->getURL()."          \n";
+			$title.= 'User: '.$loginModel->getUsername().' ('.$loginModel->getUserId().")\n";
+			$title.= 'Key: '.$loginModel->getAccessKey();
+			$rdo.= sprintf("<li><a href='#'><small><abbr title='%s'>Welcome <b>%s</b></abbr></small></a></li>", $title, $loginModel->getUsername());
 			$rdo.= "<li><a href='index.php?action=Logout'>Logout</a></li>";
 		}
 		$rdo.= '<li style="margin-left:30px;">&nbsp;</li>
