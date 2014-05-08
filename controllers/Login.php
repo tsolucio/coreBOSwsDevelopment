@@ -18,7 +18,6 @@ class Login_Controller {
 		
 		if(empty($url)) $url = 'http://localhost/';
 		if(empty($username)) $username = 'admin';
-		
 
 		if(!empty($url) && !empty($username) && !empty($accesskey)) {
 			$loginModel = new Login_Model($url, $username, $accesskey);
@@ -38,7 +37,7 @@ class Login_Controller {
 		
 		Header_Controller::process($request);
 		?>
-		<form method='POST' action='index.php' onsubmit='this.__submitButton.value=\"Verifying\"; this.__submitButton.disabled=true;'>
+		<form method='POST' action='index.php' onsubmit='$("#wserrmsg").hide();this.__submitButton.value="Verifying"; this.__submitButton.disabled=true;'>
 		<div class='form-group'>
 			<label for='url'>URL</label>
 			<input type='text' name='url' value='<?php echo $url; ?>' size=40 class='form-control'>
@@ -56,6 +55,9 @@ class Login_Controller {
 		</div>
 		</form>
 <?php
+		if(!empty($url) && !empty($username) && !empty($accesskey) && !$checkLogin) {
+		   echo '<div class="alert alert-danger" id="wserrmsg">There is an error with the validation data given, please review and try again.</div>';
+		}
 		Footer_Controller::process($request);
 	}
 	
