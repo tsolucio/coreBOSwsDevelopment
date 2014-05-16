@@ -8,6 +8,10 @@
  * Portions created by TSolucio are Copyright (C) TSolucio.
  * All Rights Reserved.
  ************************************************************************************/
+
+//error_reporting(E_ALL); // Debug
+//ini_set('display_errors','on');
+
 include_once 'models/Login.php';
 include_once 'controllers/Session.php';
 include_once 'vtwsclib/Vtiger/WSClient.php';
@@ -18,9 +22,12 @@ header('Content-type: text/html; charset=utf8');
 
 include_once 'controllers/Header.php';
 include_once 'controllers/Footer.php';
-
+if (isset($_REQUEST['action']))
+	$action = $_REQUEST['action'];
+else 
+	$action = '';
 if(Session_Controller::hasLoginContext()) {
-	switch ($_REQUEST['action']) {
+	switch ($action) {
 		case 'Logout':
 			include_once 'controllers/Logout.php';
 			Logout_Controller::process($_REQUEST);

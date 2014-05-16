@@ -126,7 +126,7 @@ EOT;
 	}
 
 	function doExecCode() {
-		function debugmsg($name,$var) {
+		function debugmsg($name,$var='') {
 			$str = "<table border=0><tr><th align=left>$name</th></tr><tr><td>";
 			$str.= print_r($var,true);
 			if (is_array($var) and isset($var['body'])) $str.= $var['body'];
@@ -142,6 +142,7 @@ EOT;
 		$cbSessionID = $loginModel->getSessionId();
 		$cbconn = new Vtiger_WSClient($cbURL);
 		$httpc = $cbconn->_client;
+		$dmsg = '';
 		$toexec = urldecode($_REQUEST['tcexec']);
 		$toexec = preg_replace('[<\?php|\?>]', '', $toexec);
 		ob_start();

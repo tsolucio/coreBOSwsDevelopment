@@ -11,8 +11,10 @@
 class Query_Controller {
 
 	function process($request) {
-		$query = $request['q'];
-		if(empty($query)) $query = '';
+		if(isset($request['q']))
+			$query = $request['q'];
+		else
+			$query = '';
 
 		$escapedQuery = $query;
 		echo "

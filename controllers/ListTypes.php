@@ -66,7 +66,8 @@ class ListTypes_Controller {
 						$fielddesc="Type: ".$field['type']['name'];
 						if (isset($field['typeofdata'])) $fielddesc.="&nbsp;(".$field['typeofdata'].')';
 						if (isset($field['uitype'])) $fielddesc.="<br>UIType: ".$field['uitype'];
-						$fielddesc.="<br>Format: ".$field['type']['format']."<br>Default: ".$field['default'];
+						if (isset($field['type']['format'])) $fielddesc.="<br>Format: ".$field['type']['format'];
+						if (isset($field['default'])) $fielddesc.="<br>Default: ".$field['default'];
 						echo $fielddesc.'</td><td>';
 						$addinfo='';
 						if (isset($field['type']['refersTo'])) {

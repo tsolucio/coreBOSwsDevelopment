@@ -12,12 +12,18 @@ class Login_Controller {
 	
 	function process($request) {
 		
-		$url = $request['url'];
-		$username = $request['username'];
-		$accesskey = $request['accesskey'];
-		
-		if(empty($url)) $url = 'http://localhost/';
-		if(empty($username)) $username = 'admin';
+		if (isset($request['url']))
+			$url = $request['url'];
+		else 
+			$url = 'http://localhost/';
+		if (isset($request['username']))
+			$username = $request['username'];
+		else
+			$username = 'admin';
+		if (isset($request['accesskey']))
+			$accesskey = $request['accesskey'];
+		else
+			$accesskey = '';
 
 		if(!empty($url) && !empty($username) && !empty($accesskey)) {
 			$loginModel = new Login_Model($url, $username, $accesskey);
