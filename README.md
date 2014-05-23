@@ -11,11 +11,11 @@ For complete details on webservice development access or wiki at: http://corebos
 
 **Follow us**
 
-http://corebos.org/
+[coreBOS Website](http://corebos.org/)
 
-https://plus.google.com/communities/109845486286232591652
+[Google+ Community](https://plus.google.com/communities/109845486286232591652)
 
-http://www.linkedin.com/groups/coreBOS-7479130?trk=my_groups-b-grp-v
+[LinkedIn Group](http://www.linkedin.com/groups/coreBOS-7479130?trk=my_groups-b-grp-v)
 
 
 **Thank you** very much for your help and contribution.
