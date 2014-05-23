@@ -7,7 +7,7 @@ This project is a development tool that helps testing the coreBOS webservice (RE
 
 **NOTE:** This is a **potentially very dangerous application** to have available publically. With very little information anybody can access your data and even write scripts directly into your server (!). This is a **developer's** tool, it should not be deployed on any production server.
 
-For complete details on webservice development access or wiki at: http://corebos.org/documentation/doku.php?id=en:devel:corebosws
+For complete details on webservice development [access or wiki](http://corebos.org/documentation/doku.php?id=en:devel:corebosws)
 
 **Follow us**
 
