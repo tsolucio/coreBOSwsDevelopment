@@ -19,5 +19,5 @@ $dmsg.= debugmsg(
 	'Result of the REST call',
 	array('status'=>'success','result'=>'hello world')
 );
-echo "<br>You can find some more information on our wiki: <a href='http://corebos.org/documentation/doku.php?id=en:devel:corebosws:coreboswsbrowser'>coreBOSwsBrowser</a>";
+echo "<br>You can find some more information on our wiki: <a href='http://corebos.org/documentation/doku.php?id=en:devel:corebosws:coreBOSwsDevelopment'>coreBOSwsDevelopment</a>";
 ?>

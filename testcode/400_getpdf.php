@@ -17,7 +17,7 @@ if($jsonResponse['success']==false) {
 	$dmsg.= debugmsg('GetPDFData failed: '.$jsonResponse['error']['message']);
 	echo 'GetPDFData failed!';
 } else {
-	// The next code does not work in the coreBOSwsBrowser because we capture the header in the application
+	// The next code does not work in the coreBOSwsDevelopment because we capture the header in the application
 	// but it does work if sent directly to the browser...
 	/*
 		// fix for IE catching or PHP bug issue
