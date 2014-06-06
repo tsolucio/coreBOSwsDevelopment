@@ -15,7 +15,7 @@
  *************************************************************************************************
  *  Author       : JPL TSolucio, S. L.
  *************************************************************************************************/
-class TestCode_Controller {
+class TestCodeJS_Controller {
 
 	function process($request) {
 		$loginModel = Session_Controller::getLoginContext();
@@ -24,8 +24,8 @@ class TestCode_Controller {
 		$login  = $client->doLogin($loginModel->getUsername(), $loginModel->getAccessKey());
 
 		if($login) {
-			TestCode_Controller::doLayout();
-			TestCode_Controller::doLayoutCode();
+			TestCodeJS_Controller::doLayout();
+			TestCodeJS_Controller::doLayoutCode();
 		} else {
 			echo "<div class='alert alert-danger'>ERROR: Login failure!</div>";
 		}
@@ -33,9 +33,9 @@ class TestCode_Controller {
 
 	function doLayout() {
 		$testcodescripts='';
-		foreach (glob('testcode/*.{php}',GLOB_BRACE) as $tcode) {
+		foreach (glob('testcode/*.{js}',GLOB_BRACE) as $tcode) {
 			$tc = basename($tcode);
-			$testcodescripts.="<li><a href='index.php?action=TestCode&tcload=$tc'>$tc</a></li>";
+			$testcodescripts.="<li><a href='index.php?action=TestCodeJS&tcload=$tc'>$tc</a></li>";
 		}
 		$loadtc='';
 		if (!empty($_REQUEST['tcload'])) {
@@ -64,16 +64,20 @@ class TestCode_Controller {
 		<div class="row">
 			<div class="col-lg-5 pull-left"><h3>Debug</h3></div>
 		</div>
-		<div class="row">
-			<div class="col-lg-12 pull-left" id="cbwsdebug" style="height:600px;border: solid 1px;overflow: scroll;"></div>
-		</div>
+		<div class='alert alert-info'>Browsers' console is so powerful that it is much better to output there using console.log than to try to force some output scheme like we need in PHP.</div>
 EOT;
 	}
 
 	function doLayoutCode() {
+		$loginModel = $_SESSION['vtbrowser_auth'];
+		$cbURL = $loginModel->getURL().'/webservice.php';
+		$cbUserName = $loginModel->getUsername();
+		$cbUserID = $loginModel->getUserId();
+		$cbAccessKey = $loginModel->getAccessKey();
 		echo <<<EOT
 <link rel="stylesheet" href="assets/codemirror/lib/codemirror.css">
 <link rel="stylesheet" href="assets/codemirror/addon/dialog/dialog.css">
+<script src="vtwsclib/WSClient.js"></script>
 <script src="assets/codemirror/lib/codemirror.js"></script>
 <script src="assets/codemirror/addon/edit/matchbrackets.js"></script>
 <script src="assets/codemirror/addon/edit/matchtags.js"></script>
@@ -89,89 +93,16 @@ EOT;
 <script src="assets/codemirror/mode/clike/clike.js"></script>
 <script src="assets/codemirror/mode/php/php.js"></script>
 <style type="text/css">.CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}</style>
+<script src="assets/testcode.js"></script>
 <script>
-	function clearAllTextareas() {
-		editor.setValue('');
-		$('#cbwsdebug').html('');
-		$('#cbwsoutput').html('');
-		$('#cbwsoutput').removeClass('alert-danger');
-	}
-	function doExecCode() {
-		var tccode = encodeURI(editor.getValue());
-		$.ajax({
-		  url: "index.php",
-		  data: { action: "execCode", tcexec: tccode },
-		  context: document.body
-		}).done(function(oput) {
-		  rdo = JSON.parse(oput);
-		  if (rdo.result === false) {
-			$('#cbwsoutput').addClass('alert-danger');
-		  } else {
-			$('#cbwsoutput').removeClass('alert-danger');
-		  }
-		  $('#cbwsoutput').html(rdo.output);
-		  $('#cbwsdebug').html(rdo.debug);
-		});
-	}
-	var editor = CodeMirror.fromTextArea(document.getElementById("cbwscode"), {
-		lineNumbers: true,
-		matchBrackets: true,
-		mode: "application/x-httpd-php",
-		indentUnit: 4,
-		indentWithTabs: true
-	});
-	editor.setSize(650, 415);
+	var cbURL = '$cbURL';
+	var cbUserName = '$cbUserName';
+	var cbUserID = '$cbUserID';
+	var cbAccessKey = '$cbAccessKey';
+	var cbconn = new Vtiger_WSClient(cbURL);
+	cbconn.doLogin(cbUserName,cbAccessKey);
 </script>
 EOT;
 	}
-
-	function doExecCode() {
-		function debugmsg($name,$var='') {
-			$str = "<table border=0><tr><th align=left>$name</th></tr><tr><td>";
-			$str.= print_r($var,true);
-			if (is_array($var) and isset($var['body'])) $str.= $var['body'];
-			if (is_array($var) and isset($var['xdebug_message'])) $str.= $var['xdebug_message'];
-			$str.= "</td></tr></table>";
-			return $str;
-		}
-		$loginModel = $_SESSION['vtbrowser_auth'];
-		$cbURL = $loginModel->getURL().'/webservice.php';
-		$cbUserName = $loginModel->getUsername();
-		$cbUserID = $loginModel->getUserId();
-		$cbAccessKey = $loginModel->getAccessKey();
-		$cbSessionID = $loginModel->getSessionId();
-		$cbconn = new Vtiger_WSClient($cbURL);
-		$httpc = $cbconn->_client;
-		$dmsg = '';
-		$toexec = urldecode($_REQUEST['tcexec']);
-		$toexec = preg_replace('[<\?php|\?>]', '', $toexec);
-		ob_start();
-		$execrdo = eval($toexec);
-		$out = ob_get_contents();
-		ob_end_clean();
-		$rdo = array(
-			'result' => $execrdo,
-			'output' => $out,
-			'debug' => $dmsg
-		);
-		echo json_encode($rdo);
-	}
-
-	function doExecCodeDirect($script) {
-		if (!empty($script)) {
-			function debugmsg($name,$var) {};
-			$loginModel = $_SESSION['vtbrowser_auth'];
-			$cbURL = $loginModel->getURL().'/webservice.php';
-			$cbUserName = $loginModel->getUsername();
-			$cbUserID = $loginModel->getUserId();
-			$cbAccessKey = $loginModel->getAccessKey();
-			$cbSessionID = $loginModel->getSessionId();
-			$cbconn = new Vtiger_WSClient($cbURL);
-			$httpc = $cbconn->_client;
-			$script = basename($script);
-			include_once 'testcode/'.$script;
-		}
-	}
-
 }
 ?>

@@ -45,6 +45,12 @@ if(Session_Controller::hasLoginContext()) {
 			TestCode_Controller::process($_REQUEST);
 			Footer_Controller::process($_REQUEST);
 			break;
+		case 'TestCodeJS':
+			Header_Controller::process($_REQUEST);
+			include_once 'controllers/TestCodeJS.php';
+			TestCodeJS_Controller::process($_REQUEST);
+			Footer_Controller::process($_REQUEST);
+			break;
 		case 'execCode':
 			include_once 'controllers/TestCode.php';
 			TestCode_Controller::doExecCode();

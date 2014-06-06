@@ -65,7 +65,8 @@ class Header_Controller {
 		if(Session_Controller::hasLoginContext()) {
 			$rdo.= '<li><a href="index.php?action=vql">Query</a></li>';
 			$rdo.= '<li><a href="index.php?action=ListTypes">List Types</a></li>';
-			$rdo.= '<li><a href="index.php?action=TestCode">Test Code</a></li>';
+			$rdo.= '<li><a href="index.php?action=TestCode">Test Code PHP</a></li>';
+			$rdo.= '<li><a href="index.php?action=TestCodeJS">Test Code JS</a></li>';
 			$rdo.= '<li style="margin-left:40px;">&nbsp;</li>';
 		}
 		$rdo.= '<li><a href="http://corebos.org/page/corebos-documentation" target="_blank">Documentation</a></li>
