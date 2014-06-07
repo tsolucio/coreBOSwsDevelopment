@@ -1,7 +1,8 @@
 <?php
 
-require_once('vtwsclib/Vtiger/Net/HTTP_Client.php');
-require_once('vtwsclib/Vtiger/WSVersion.php');
+global $coreBOS_Basedir;
+require_once $coreBOS_Basedir.'/Vtiger/Net/HTTP_Client.php';
+require_once $coreBOS_Basedir.'/Vtiger/WSVersion.php';
 
 /**
  * Vtiger Webservice Client
@@ -125,20 +126,6 @@ class Vtiger_WSClient {
 	}
 
 	/**
-	 * JSONify input data.
-	 */
-	function toJSON($input) {
-		return $this->_client->__jsondecode($input);
-	}
-
-	/**
-	 * Convert input data to JSON String.
-	 */
-	function toJSONString($input) {
-		return $this->_client->__jsonencode($input);
-	}
-
-	/**
 	 * Do Login Operation
 	 */
 	function doLogin($username, $vtigerUserAccesskey) {
@@ -171,7 +158,7 @@ class Vtiger_WSClient {
 		$this->__checkLogin();
 
 		// Make sure the query ends with ;
-		$query = trim($query);		
+		$query = trim($query);
 		if(strripos($query, ';') != strlen($query)-1) $query .= ';';
 
 		$getdata = Array(
@@ -277,7 +264,7 @@ class Vtiger_WSClient {
 			'operation'   => 'create',
 			'sessionName' => $this->_sessionid,
 			'elementType' => $module,
-			'element'     => $this->toJSONString($valuemap)
+			'element'     => json_encode($valuemap)
 		);
 		$resultdata = $this->_client->doPost($postdata, true);
 		if($this->hasError($resultdata)) {
@@ -320,7 +307,8 @@ class Vtiger_WSClient {
 			return false;
 		}
 		return $resultdata['result'];
-	}	
+	}
+
 	function doUpdate($module, $valuemap, $doRegAccesoUpdate=true) {
 		// Perform re-login if required.
 		$this->__checkLogin();
@@ -338,7 +326,7 @@ class Vtiger_WSClient {
 			'operation'   => 'update',
 			'sessionName' => $this->_sessionid,
 			'elementType' => $module,
-			'element'     => $this->toJSONString($valuemap)
+			'element'     => json_encode($valuemap)
 		);
 		$resultdata = $this->_client->doPost($postdata, true);
 		if($this->hasError($resultdata)) {
@@ -346,5 +334,6 @@ class Vtiger_WSClient {
 		}
 		return $resultdata['result'];
 	}
+
 }
 ?>

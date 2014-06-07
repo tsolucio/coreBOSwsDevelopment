@@ -1,7 +1,7 @@
 <?php
 
-require_once('vtwsclib/third-party/curl_http_client.php');
-require_once('vtwsclib/third-party/Zend/Json.php');
+global $coreBOS_Basedir;
+require_once $coreBOS_Basedir.'/third-party/curl_http_client.php';
 
 class Vtiger_HTTP_Client extends Curl_HTTP_Client {
 	var $_serviceurl = '';
@@ -16,13 +16,13 @@ class Vtiger_HTTP_Client extends Curl_HTTP_Client {
 		$this->set_user_agent($useragent);
 
 		// Escape SSL certificate hostname verification
-		curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, 0);	
+		curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, 0);
 	}
 
 	function doPost($postdata=false, $decodeResponseJSON=false, $timeout=20) {
 		if($postdata === false) $postdata = Array();
 		$resdata = $this->send_post_data($this->_serviceurl, $postdata, null, $timeout);
-		if($resdata && $decodeResponseJSON) $resdata = $this->__jsondecode($resdata);
+		if($resdata && $decodeResponseJSON) $resdata = json_decode($resdata,true);
 		return $resdata;
 	}
 
@@ -33,17 +33,10 @@ class Vtiger_HTTP_Client extends Curl_HTTP_Client {
 			$queryString .= '&' . urlencode($key)."=".urlencode($value);
 		}
 		$resdata = $this->fetch_url("$this->_serviceurl?$queryString", null, $timeout);
-		if($resdata && $decodeResponseJSON) $resdata = $this->__jsondecode($resdata);
+		if($resdata && $decodeResponseJSON) $resdata = json_decode($resdata,true);
 		return $resdata;
 	}
 
-	function __jsondecode($indata) {
-		return Zend_Json::decode($indata);
-	}
-
-	function __jsonencode($indata) {
-		return Zend_Json::encode($indata);
-	}
 }
 
 ?>
