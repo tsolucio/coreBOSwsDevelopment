@@ -1,8 +1,11 @@
 <?php
 
 global $coreBOS_Basedir;
-require_once $coreBOS_Basedir.'/Vtiger/Net/HTTP_Client.php';
-require_once $coreBOS_Basedir.'/Vtiger/WSVersion.php';
+if (empty($coreBOS_Basedir)) {
+	$coreBOS_Basedir = dirname(__FILE__);
+}
+require_once $coreBOS_Basedir.'/Net/HTTP_Client.php';
+require_once $coreBOS_Basedir.'/WSVersion.php';
 
 /**
  * Vtiger Webservice Client
@@ -37,7 +40,7 @@ class Vtiger_WSClient {
 	 */
 	function __construct($url) { 
 		$this->_serviceurl = $this->getWebServiceURL($url);
-		$this->_client = new Vtiger_HTTP_Client($this->_serviceurl);
+		$this->_client = new cbHTTP_Client($this->_serviceurl);
 	}
 
 	/**
@@ -52,7 +55,7 @@ class Vtiger_WSClient {
 	 * Reinitialize the client.
 	 */
 	function reinitalize() {
-		$this->_client = new Vtiger_HTTP_Client($this->_serviceurl);
+		$this->_client = new cbHTTP_Client($this->_serviceurl);
 	}
 
 	/**
@@ -128,14 +131,14 @@ class Vtiger_WSClient {
 	/**
 	 * Do Login Operation
 	 */
-	function doLogin($username, $vtigerUserAccesskey) {
+	function doLogin($username, $userAccesskey) {
 		// Do the challenge before login
 		if($this->__doChallenge($username) === false) return false;
 		
 		$postdata = Array(
 			'operation' => 'login',
 			'username'  => $username,
-			'accessKey' => md5($this->_servicetoken.$vtigerUserAccesskey)
+			'accessKey' => md5($this->_servicetoken.$userAccesskey)
 		);
 		$resultdata = $this->_client->doPost($postdata, true);
 
@@ -143,7 +146,7 @@ class Vtiger_WSClient {
 			return false;
 		}
 		$this->_serviceuser = $username;
-		$this->_servicekey  = $vtigerUserAccesskey;
+		$this->_servicekey  = $userAccesskey;
 
 		$this->_sessionid = $resultdata['result']['sessionName'];
 		$this->_userid    = $resultdata['result']['userId'];
@@ -167,6 +170,7 @@ class Vtiger_WSClient {
 			'query'  => $query
 		);
 		$resultdata = $this->_client->doGet($getdata, true);
+		
 		if($this->hasError($resultdata)) {
 			return false;
 		}
@@ -188,25 +192,26 @@ class Vtiger_WSClient {
 	/**
 	 * List types available Modules.
 	 */
-	function doListTypes() {
+	function doListTypes($fieldTypeList='') {
 		// Perform re-login if required.
 		$this->__checkLogin();
 
+		if (is_array($fieldTypeList)) $fieldTypeList = json_encode($fieldTypeList);
 		$getdata = Array(
 			'operation' => 'listtypes',
-			'sessionName'  => $this->_sessionid
+			'sessionName'  => $this->_sessionid,
+			'fieldTypeList' => $fieldTypeList
 		);
 		$resultdata = $this->_client->doGet($getdata, true);
 		if($this->hasError($resultdata)) {
 			return false;
-		}		
+		}
 		$modulenames = $resultdata['result']['types'];
 
 		$returnvalue = Array();
 		foreach($modulenames as $modulename) {
-			$returnvalue[$modulename] = 
-				Array ( 'name' => $modulename );
-		}		
+			$returnvalue[$modulename] = Array ( 'name' => $modulename );
+		}
 		return $returnvalue;
 	}
 
@@ -273,6 +278,28 @@ class Vtiger_WSClient {
 		return $resultdata['result'];
 	}
 
+	function doUpdate($module, $valuemap) {
+		// Perform re-login if required.
+		$this->__checkLogin();
+	
+		// Assign record to logged in user if not specified
+		if(!isset($valuemap['assigned_user_id'])) {
+			$valuemap['assigned_user_id'] = $this->_userid;
+		}
+	
+		$postdata = Array(
+			'operation'   => 'update',
+			'sessionName' => $this->_sessionid,
+			'elementType' => $module,
+			'element'     => json_encode($valuemap)
+		);
+		$resultdata = $this->_client->doPost($postdata, true);
+		if($this->hasError($resultdata)) {
+			return false;
+		}
+		return $resultdata['result'];
+	}
+
 	/**
 	 * Invoke custom operation
 	 *
@@ -303,32 +330,6 @@ class Vtiger_WSClient {
 			$resultdata = $this->_client->doGet($senddata, true);
 		}
 
-		if($this->hasError($resultdata)) {
-			return false;
-		}
-		return $resultdata['result'];
-	}
-
-	function doUpdate($module, $valuemap, $doRegAccesoUpdate=true) {
-		// Perform re-login if required.
-		$this->__checkLogin();
-
-		if ($doRegAccesoUpdate) {
-			User::actualizaRegistroAcceso($this, 'actualización');
-		}
-
-		// Assign record to logged in user if not specified
-		if(!isset($valuemap['assigned_user_id'])) {
-			$valuemap['assigned_user_id'] = $this->_userid;
-		}
-
-		$postdata = Array(
-			'operation'   => 'update',
-			'sessionName' => $this->_sessionid,
-			'elementType' => $module,
-			'element'     => json_encode($valuemap)
-		);
-		$resultdata = $this->_client->doPost($postdata, true);
 		if($this->hasError($resultdata)) {
 			return false;
 		}
