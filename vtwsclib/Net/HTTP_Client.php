@@ -1,14 +1,14 @@
 <?php
 
 global $coreBOS_Basedir;
-require_once $coreBOS_Basedir.'/third-party/curl_http_client.php';
+require_once $coreBOS_Basedir.'/Net/curl_http_client.php';
 
-class Vtiger_HTTP_Client extends Curl_HTTP_Client {
+class cbHTTP_Client extends Curl_HTTP_Client {
 	var $_serviceurl = '';
 
 	function __construct($url) {
 		if(!function_exists('curl_exec')) {
-			die('Vtiger_HTTP_Client: Curl extension not enabled!');
+			die('cbHTTP_Client: Curl extension not enabled!');
 		}
 		parent::__construct();
 		$this->_serviceurl = $url;

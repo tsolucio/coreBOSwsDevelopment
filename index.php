@@ -14,7 +14,7 @@
 
 include_once 'models/Login.php';
 include_once 'controllers/Session.php';
-include_once 'vtwsclib/Vtiger/WSClient.php';
+include_once 'vtwsclib/WSClient.php';
 
 Session_Controller::start();
 
