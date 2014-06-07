@@ -141,6 +141,7 @@ EOT;
 		$cbAccessKey = $loginModel->getAccessKey();
 		$cbSessionID = $loginModel->getSessionId();
 		$cbconn = new Vtiger_WSClient($cbURL);
+		$cbconn->doLogin($cbUserName, $cbAccessKey);
 		$httpc = $cbconn->_client;
 		$dmsg = '';
 		$toexec = urldecode($_REQUEST['tcexec']);
