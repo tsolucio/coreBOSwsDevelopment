@@ -332,6 +332,40 @@ var Vtiger_WSClient = function(url) {
 	};
 
 	/**
+	 * Do Update Operation
+	 */
+	this.doUpdate = function(module, valuemap, callback) {
+		this.__checkLogin();
+
+		// Assign record to logged in user if not specified
+		if(valuemap['assigned_user_id'] == null) {
+			valuemap['assigned_user_id'] = this._userid;
+		}
+
+		var reqtype = 'POST';
+		var postdata = {
+			'operation'    : 'update',
+			'sessionName'  : this._sessionid,
+			'elementType'  : module,
+			'element'      : this.toJSONString(valuemap)
+		};
+		jQuery.ajax({
+			url : this._serviceurl,
+			type: reqtype,
+			data: postdata,
+			// Pass reference to the client to use it inside callback function.
+			_wsclient : this, 
+			complete : function(res, status) {
+				var usethis = this._wsclient;
+				var resobj = usethis.toJSON(res.responseText);
+				var result = false;
+				if(!usethis.hasError(resobj)) result = resobj['result'];
+				usethis.__performCallback(callback, result);
+			}
+		});
+	};
+
+	/**
 	 * Invoke custom operation
 	 */
 	this.doInvoke = function(callback, method, params, type) {
