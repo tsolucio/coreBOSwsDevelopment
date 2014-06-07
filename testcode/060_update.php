@@ -8,7 +8,7 @@ $contactData  = array('lastname'=>'Valiant Update', 'assigned_user_id'=>$cbUserI
 $objectJson = json_encode($contactData);
 $dmsg.= debugmsg("Update, sending in",$objectJson);
 
-//name of the module for which the entry has to be created.
+//name of the module for which the entry has to be updated.
 $moduleName = 'Contacts';
 
 //sessionId is obtained from loginResult.
