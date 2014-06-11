@@ -336,5 +336,26 @@ class Vtiger_WSClient {
 		return $resultdata['result'];
 	}
 
+	/**
+	 * Retrieve related records.
+	 */
+	function doGetRelatedRecords($record, $module, $relatedModule, $queryParameters) {
+		// Perform re-login if required.
+		$this->__checkLogin();
+
+		$postdata = Array(
+			'operation' => 'getRelatedRecords',
+			'sessionName'  => $this->_sessionid,
+			'id' => $record,
+			'module' => $module,
+			'relatedModule' => $relatedModule,
+			'queryParameters' => $queryParameters,
+		);
+		$resultdata = $this->_client->doPost($postdata, true);
+		if($this->hasError($resultdata)) {
+			return false;
+		}
+		return $resultdata['result']['records'];
+	}
 }
 ?>
