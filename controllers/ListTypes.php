@@ -20,7 +20,6 @@ class ListTypes_Controller {
 			$modules = $client->doListTypes();
 
 			if($modules) {
-				
 				$modOptions = '';
 				foreach($modules as $module) {
 					$modOptions.= "<option value='".$module['name']."'>".$module['name']."</option>";
@@ -51,7 +50,7 @@ class ListTypes_Controller {
 						echo "<tr><td nowrap='nowrap'><b>".$fieldname.'</b><br>'.$field['name'].'</td>';
 						echo "<td>";
 						$fielddesc="Mandatory: ";
-						$fielddesc.=($field['name'] ? 'yes' : 'no')."<br>Null: ".($field['nullable'] ? 'yes' : 'no');
+						$fielddesc.=($field['mandatory'] ? 'yes' : 'no')."<br>Null: ".($field['nullable'] ? 'yes' : 'no');
 						$fielddesc.="<br>Editable: ".($field['editable'] ? 'yes' : 'no');
 						if (isset($field['sequence'])) $fielddesc.="<br>Sequence: ".$field['sequence'];
 						echo $fielddesc."</td><td>";

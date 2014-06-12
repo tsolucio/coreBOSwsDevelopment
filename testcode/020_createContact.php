@@ -1,5 +1,5 @@
 <?php
-//fill in the details of the contacts.userId is obtained from loginResult.
+//fill in the details of the contacts
 $contactData  = array('lastname'=>'Valiant', 'assigned_user_id'=>$cbUserID,'homephone'=>'123456789');
 //encode the object in JSON format to communicate with the server.
 $objectJson = json_encode($contactData);
