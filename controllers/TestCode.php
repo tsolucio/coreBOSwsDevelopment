@@ -99,6 +99,7 @@ EOT;
 	function doExecCode() {
 		var tccode = encodeURI(editor.getValue());
 		$.ajax({
+		  type: 'POST',
 		  url: "index.php",
 		  data: { action: "execCode", tcexec: tccode },
 		  context: document.body
