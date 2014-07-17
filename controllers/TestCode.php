@@ -37,10 +37,14 @@ class TestCode_Controller {
 			$tc = basename($tcode);
 			$testcodescripts.="<li><a href='index.php?action=TestCode&tcload=$tc'>$tc</a></li>";
 		}
-		$loadtc='';
+		$loadtc=$loadtcdoc='';
 		if (!empty($_REQUEST['tcload'])) {
 			$tcl = basename($_REQUEST['tcload']);
 			$loadtc = file_get_contents('testcode/'.$tcl);
+			if (file_exists('testcode/'.$tcl.'.html'))
+				$loadtcdoc = file_get_contents('testcode/'.$tcl.'.html');
+			else
+				$loadtcdoc = '<br>&nbsp;No documentation associated to this script.';
 		}
 		echo <<<EOT
 		<div class="row">
@@ -53,13 +57,17 @@ class TestCode_Controller {
 			</div>
 			</div>
 			<div class="col-lg-1 pull-left text-center" style="top:15px;"><a href="javascript:clearAllTextareas();" class="btn btn-primary btn-large">Clear</a></div>
-			<div class="col-lg-5 pull-left"><h3>Output</h3></div>
+			<div class="col-lg-3 pull-left"><h3><a href="javascript:void(0);" onclick="$('#cbwsoutput').show();$('#cbwsdocs').hide();">Output</a></h3></div>
+			<div class="col-lg-2 pull-left"><h3><a href="javascript:void(0);" onclick="$('#cbwsoutput').hide();$('#cbwsdocs').show();">Documentation</a></h3></div>
 		</div>
 		<div class="row">
 			<div class="col-lg-7 pull-left">
 				<textarea id="cbwscode" rows=50 cols=78 style="height:100px">$loadtc</textarea>
 			</div>
-			<div class="col-lg-5 pull-left" id="cbwsoutput" style="height:415px;border: solid 1px;overflow: scroll;"></div>
+			<div class="col-lg-5 pull-left" style="height:415px;border: 0px; padding: 0px;">
+				<div id="cbwsoutput" style="height:415px;border: solid 1px;overflow: scroll;"></div>
+				<div id="cbwsdocs" style="height:415px;border: solid 1px;overflow: scroll; display:none;padding:4px;">$loadtcdoc</div>
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-lg-5 pull-left"><h3>Debug</h3></div>

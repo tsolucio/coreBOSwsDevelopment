@@ -9,6 +9,8 @@ This project is a development tool that helps testing the coreBOS webservice (RE
 
 For complete details on webservice development [access or wiki](http://corebos.org/documentation/doku.php?id=en:devel:corebosws)
 
+To add examples to this tool just copy them to the testcode directory. If the file has a .php extension it will automatically appear in the PHP code section, if it has a .js extension it will appear in the Javascript example section and if a file with the exact same name but with an .html extension exists it will be loaded into the Documentation section.
+
 **Follow us**
 
 [coreBOS Website](http://corebos.org/)

@@ -1,0 +1,23 @@
+<h3 id="retrieve_attachment">Retrieve Attachment</h4>
+<h4>Purpose:</h4>
+<p>Retrieve file attached to a document as a base64 encoded string. This method was added instead of modifying the already existing Retrieve method to avoid having to download all attachments when only a list is required and so we wouldn't have to modify the existing interface of the retrieve method.</p>
+<h4>Profile:</h4>
+<p><code>retrievedocattachment(id:Id,returnfile:boolean):Map</code></p>
+<h4>Send as:</h4>
+<p><code>POST</code></p>
+<h4>Parameters:</h4><p>
+<table width=100% border=1 class="table table-hover">
+<tr><td style="background-color:whitesmoke">id</td><td>comma separated list of document identifiers to obtain</td></tr>
+<tr><td style="background-color:whitesmoke">returnfile</td><td>true if we need to really get the file, false to just get the information of the attachment</td></tr>
+</table>
+</p>
+<h4>Response:</h4>
+<p>A map object with all the information of the attachment</p>
+<code>['result'][$docId]['filetype']<br>
+['result'][$docId]['filename']<br>
+['result'][$docId]['filesize']<br>
+['result'][$docId]['attachment']  (base64 encoded)</code>
+<h4>URL Format:</h4>
+<p><code>http://corebos_url/webservice.php?operation=retrievedocattachment&amp;sessionName=[session id]&amp;id=[id documento]&amp;returnfile=[0|1]</code></p>
+<h4>Additional Information:</h4>
+<p><a href="http://corebos.org/documentation/doku.php?id=en:devel:corebosws:docenhance_examples" title="en:devel:corebosws:docenhance_examples" target="_blank">REST Document Manipulation Enhancements</a></p>
