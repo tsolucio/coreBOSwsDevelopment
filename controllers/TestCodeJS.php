@@ -35,7 +35,7 @@ class TestCodeJS_Controller {
 		$testcodescripts='';
 		foreach (glob('testcode/*.{js}',GLOB_BRACE) as $tcode) {
 			$tc = basename($tcode);
-			$testcodescripts.="<li><a href='index.php?action=TestCodeJS&tcload=$tc'>$tc</a></li>";
+			$testcodescripts.="<li><a href='index.php?action=TestCodeJS&tcload=$tc'><h5>$tc</h5></a></li>";
 		}
 		$loadtc=$loadtcdoc='';
 		if (!empty($_REQUEST['tcload'])) {
@@ -48,21 +48,19 @@ class TestCodeJS_Controller {
 		}
 		echo <<<EOT
 		<div class="row">
-			<div class="col-lg-4 pull-left"><h3>Code</h3></div>
+			<div class="col-lg-4 pull-left"><h3><a href="javascript:void(0);" onclick="$('#cbwscodediv').show();$('#cbwstestcodediv').hide();">Code</a></h3></div>
 			<div class="col-lg-1 pull-left text-center" style="top:15px;"><a href="javascript:doExecCode();" class="btn btn-primary btn-large">Execute</a></div>
-			<div class="col-lg-1 pull-left text-center" style="top:15px;">
-				<div class="dropdown">
-				  <a data-toggle="dropdown" href="#" class="btn btn-primary btn-large">Load</a>
-				  <ul class="dropdown-menu text-left" role="menu" aria-labelledby="dLabel">$testcodescripts</ul>
-			</div>
-			</div>
+			<div class="col-lg-1 pull-left text-center" style="top:15px;"><a href="javascript:void(0);" onclick="$('#cbwstestcodediv').show();$('#cbwscodediv').hide();" class="btn btn-primary btn-large">Load</a></div>
 			<div class="col-lg-1 pull-left text-center" style="top:15px;"><a href="javascript:clearAllTextareas();" class="btn btn-primary btn-large">Clear</a></div>
 			<div class="col-lg-3 pull-left"><h3><a href="javascript:void(0);" onclick="$('#cbwsoutput').show();$('#cbwsdocs').hide();">Output</a></h3></div>
 			<div class="col-lg-2 pull-left"><h3><a href="javascript:void(0);" onclick="$('#cbwsoutput').hide();$('#cbwsdocs').show();">Documentation</a></h3></div>
 		</div>
 		<div class="row">
-			<div class="col-lg-7 pull-left">
+			<div class="col-lg-7 pull-left" style="border: 0px; padding: 0px;">
+				<div class="col-lg-7 pull-left" id="cbwscodediv">
 				<textarea id="cbwscode" rows=50 cols=78 style="height:100px">$loadtc</textarea>
+				</div>
+				<div class="col-lg-7 pull-left" id="cbwstestcodediv" style="height:415px; width:98%; border: solid 1px;overflow: scroll; display:none;padding:6px;">$testcodescripts</div>
 			</div>
 			<div class="col-lg-5 pull-left" style="height:415px;border: 0px; padding: 0px;">
 				<div id="cbwsoutput" style="height:415px;border: solid 1px;overflow: scroll;"></div>
