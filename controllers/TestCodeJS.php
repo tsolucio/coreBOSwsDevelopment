@@ -37,6 +37,7 @@ class TestCodeJS_Controller {
 			$tc = basename($tcode);
 			$testcodescripts.="<li><a href='index.php?action=TestCodeJS&tcload=$tc'><h5>$tc</h5></a></li>";
 		}
+		$testcodescripts='<ul>'.$testcodescripts.'</ul>';
 		$loadtc=$loadtcdoc='';
 		if (!empty($_REQUEST['tcload'])) {
 			$tcl = basename($_REQUEST['tcload']);
