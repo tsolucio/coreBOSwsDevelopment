@@ -1,0 +1,18 @@
+<h3 id="setrelated">SetRelated</h4>
+<h4>Purpose:</h4>
+<p>Establish many to many (m:m) relations between records.</p>
+<h4>Profile:</h4>
+<p><code>SetRelated(relate_this_id:Id,with_this_ids:string/array):boolean</code></p>
+<h4>Send as:</h4>
+<p><code>POST</code></p>
+<h4>Parameters:</h4><p>
+<table width=100% border=1 class="table table-hover">
+<tr><td style="background-color:whitesmoke">relate_this_id</td><td>string ID of record we want to related other records with</td></tr>
+<tr><td style="background-color:whitesmoke">with_this_ids</td><td>string/array either a string with one unique ID or an array of IDs to relate to the first parameter</td></tr>
+</table>
+</p>
+<h4>Response:</h4>
+<p>true if all went well, error otherwise</p>
+<h4>URL Format:</h4>
+<p><code>http://corebos_url/webservice.php?operation=SetRelated&amp;sessionName=[session id]&amp;relate_this_id=[id main record]&amp;with_this_ids=[json encoded list of records]</code></p>
+<h4>Additional Information:</h4>
