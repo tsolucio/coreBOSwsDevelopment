@@ -12,8 +12,8 @@ queryParameters = {
 cbconn.doGetRelatedRecords(ctoId, 'Contacts', 'Services', queryParameters, afterGetRelated);
 
 function afterGetRelated(result, args) {
+	console.log(result);
 	if(result) {
-		console.log(result);
 		outputmsg(result.records.length);
 		var columns = cbconn.getResultColumns(result.records);
 		var colnames =[];
@@ -37,6 +37,6 @@ function afterGetRelated(result, args) {
 		hdr += "</table>";
 		outputmsg(hdr);
 	} else {
-		outputmsg('<p style="color:red">Set Related failed</p>');
+		outputmsg('<p style="color:red">Get Related failed</p>');
 	}
 }
