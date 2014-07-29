@@ -5,8 +5,13 @@ debugmsg('cbUserID',cbUserID);
 debugmsg('cbAccessKey',cbAccessKey);
 debugmsg('cbconn',cbconn);
 // outputmsg writes to the output window here on the right
-outputmsg('cbURL',cbURL);
-outputmsg('cbUserName',cbUserName);
-outputmsg('cbUserID',cbUserID);
-outputmsg('cbAccessKey',cbAccessKey);
-outputmsg('cbconn',cbconn);
+outputmsg('<br>cbURL ',cbURL);
+outputmsg(cbURL);
+outputmsg('<br>cbUserName ',cbUserName);
+outputmsg(cbUserName);
+outputmsg('<br>cbUserID ',cbUserID);
+outputmsg(cbUserID);
+outputmsg('<br>cbAccessKey ',cbAccessKey);
+outputmsg(cbAccessKey);
+outputmsg('<br>cbconn ',cbconn);
+outputmsg(cbconn);
