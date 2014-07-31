@@ -9,7 +9,7 @@ $params = array(
 	"sessionName"=>$cbSessionID,
 	"operation"=>'SetRelation',
 	"relate_this_id"=>$ctoId,
-	'with_this_ids'=>json_encode(array($pdoId,$docId,$srvId)),
+	'with_these_ids'=>json_encode(array($pdoId,$docId,$srvId)),
 );
 $response = $httpc->send_post_data($cbURL, $params, true);
 $dmsg.= debugmsg("Raw response (json) SetRelation",$response);
