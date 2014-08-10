@@ -1,0 +1,18 @@
+<h3 id="create_document">Create Document with Attachment</h4>
+<h4>Purpose:</h4>
+<p>Permit the creation of new Documents records with an associated attachment.</p>
+<p>This call is exactly the same as Create, in fact it actually uses Create, the only difference is that there is a special field parameter that permits you to send in the attachment.</p>
+<h4>Send as:</h4>
+<p><code>POST</code></p>
+<h4>Parameters:</h4><p>
+<table width=100% border=1 class="table table-hover">
+<tr><td style="background-color:whitesmoke">filename</td><td>array: <br>
+&nbsp;&nbsp;'name'=>basename({file}),  // no slash nor paths in the name<br>
+&nbsp;&nbsp;'size'=>filesize({file}),<br>
+&nbsp;&nbsp;'type'=>{mime type of file},<br>
+&nbsp;&nbsp;'content'=>base64_encode({file})<br>
+</td></tr>
+</table>
+</p>
+<h4>Additional Information:</h4>
+<p><a href="http://corebos.org/documentation/doku.php?id=en:devel:corebosws:docenhance_examples" title="en:devel:corebosws:docenhance_examples" target="_blank">REST Document Manipulation Enhancements</a></p>
