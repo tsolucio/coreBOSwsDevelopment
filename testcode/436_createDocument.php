@@ -27,10 +27,6 @@ $contactData  = array(
 	'folderid' => '22x1',
 );
 
-//encode the object in JSON format to communicate with the server.
-$objectJson = json_encode($contactData);
-$dmsg.= debugmsg("Create, sending in",$objectJson);
- 
 $response = $cbconn->doCreate($moduleName, $contactData);
 $dmsg.= debugmsg("Raw response (json) Create",$response);
 
