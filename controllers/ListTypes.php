@@ -18,6 +18,7 @@ class ListTypes_Controller {
 		if($login) {
 
 			$modules = $client->doListTypes();
+			asort($modules);
 
 			if($modules) {
 				$modOptions = '';
