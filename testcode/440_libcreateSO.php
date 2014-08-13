@@ -1,9 +1,8 @@
 <?php
-//fill in the details of the contacts.userId is obtained from loginResult.
-$accountId = '3x2';
+$accountId = '11x20';
 $input_array =  array (
-	'assigned_user_id' => $userId,
-	'subject' => 'salesOrderSubject',
+	'assigned_user_id' => $cbUserID,
+	'subject' => 'REST salesOrderSubject',
 	'bill_city' => 'Drachten',
 	'bill_code' => '9205BB',
 	'bill_country' => 'Netherlands',
@@ -13,10 +12,10 @@ $input_array =  array (
 	'carrier' => NULL,
 	'contact_id' => NULL,
 	'conversion_rate' => '1.000',
-	'currency_id' => '21x2',
+	'currency_id' => '21x1',
 	'customerno' => NULL,
 	'description' => 'Producten in deze verkooporder: 2 X Heart of David - songbook 2',
-	'duedate' => '2010-11-06',
+	'duedate' => '2014-11-06',
 	'enable_recurring' => '0',
 	'end_period' => NULL,
 	'exciseduty' => '0.000',
@@ -51,8 +50,8 @@ $input_array =  array (
 	'taxtype' => 'group',  // group or individual  taxes are obtained from the application
 	'pdoInformation' => array(
 	  array(
-		"productid"=>52,
-	    "comment"=>'cmt1',
+		"productid"=>60,
+		"comment"=>'cmt1',
 		"qty"=>1,
 		"listprice"=>10,
 		'discount'=>0,  // 0 no discount, 1 discount
@@ -63,7 +62,7 @@ $input_array =  array (
 	  array(
 		"productid"=>57,
 		"qty"=>2,
-	    "comment"=>'cmt2',
+		"comment"=>'cmt2',
 		"listprice"=>10,
 		'discount'=>1,
 		"discount_type"=>'percentage',  //  amount/percentage
@@ -73,30 +72,20 @@ $input_array =  array (
 	),
 );
 
-//encode the object in JSON format to communicate with the server.
-$objectJson = json_encode($input_array);
-$dmsg.= debugmsg("Create, sending in",$objectJson);
+$dmsg.= debugmsg("Create, sending in",$input_array);
 
 //name of the module for which the entry has to be created.
 $moduleName = 'SalesOrder';
 
-//sessionId is obtained from loginResult.
-$params = array("sessionName"=>$cbSessionID, "operation"=>'create', 
-    "element"=>$objectJson, "elementType"=>$moduleName);
-//Create must be POST Request.
-$response = $httpc->send_post_data($cbURL, $params, true);
-$dmsg.= debugmsg("Raw response (json) Create",$response);
+$create = $cbconn->doCreate($moduleName, $input_array);
 
-//decode the json encode response from the server.
-$jsonResponse = json_decode($response,true);
-$dmsg.= debugmsg("Webservice response Create",$jsonResponse);
-
-if($jsonResponse['success']==false) {
-	$dmsg.= debugmsg('create failed:'.$jsonResponse['error']['message']);
-	echo 'create failed!';
+//check for whether the requested operation was successful or not.
+if($create) {
+	//operation was successful get the response.
+	var_dump($create);
 } else {
-	$savedObject = $jsonResponse['result'];
-	$id = $savedObject['id'];
-	var_dump($savedObject);
+	echo "Create failed<br>";
+	$err = $cbconn->lastError();
+	echo $err['code'].': '.$err['message'];
 }
 ?>
