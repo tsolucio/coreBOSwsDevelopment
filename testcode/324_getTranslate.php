@@ -11,7 +11,7 @@ $params = array("sessionName"=>$cbSessionID, "operation"=>'gettranslation',
 		'module'=>'Contacts'
 		);
 
-//Create must be POST Request.
+//Call must be POST Request.
 $response = $httpc->send_post_data($cbURL, $params, true);
 $dmsg.= debugmsg("Raw response (json) GetTranslation",$response);
 

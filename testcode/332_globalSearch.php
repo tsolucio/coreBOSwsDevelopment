@@ -9,7 +9,7 @@ $query = 'mary';
 $params = array("sessionName"=>$cbSessionID,
 				"operation"=>'getSearchResults', "query"=>$query,
 				"search_onlyin"=>'','restrictionids'=>$restrictionsID);
-//Create must be POST Request.
+//Call must be POST Request.
 $response = $httpc->send_post_data($cbURL, $params, true);
 $dmsg.= debugmsg("Raw response (json) unifiedsearch",$response);
 

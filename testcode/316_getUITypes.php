@@ -5,7 +5,7 @@ $moduleName = 'Accounts';
 //sessionId is obtained from loginResult.
 $params = array("sessionName"=>$cbSessionID, "operation"=>'getUItypes',
     "module"=>$moduleName);
-//Create must be POST Request.
+//Call must be POST Request.
 $response = $httpc->send_post_data($cbURL, $params, true);
 $dmsg.= debugmsg("Raw response (json) Update",$response);
 
