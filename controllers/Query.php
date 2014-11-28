@@ -21,7 +21,7 @@ class Query_Controller {
 		<form method='POST' action='index.php' onsubmit='return validateForm(this);'>
 			<table cellpadding='0' cellspacing='1'>
 				<tr valign=top>
-					<td>Query like: select firstname, lastname from Leads;<br/><textarea name='q' rows='5' cols='80'>$escapedQuery</textarea></td>
+					<td>Query like: select firstname, lastname from Leads order by firstname desc limit 0,2;<br/><textarea name='q' rows='5' cols='80'>$escapedQuery</textarea></td>
 				</tr>
 				<tr>
 					<td><input type='submit' value='Execute &raquo;' name='__submitButton' class='btn btn-primary btn-large'></td>
