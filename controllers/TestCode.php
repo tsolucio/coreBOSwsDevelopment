@@ -17,7 +17,7 @@
  *************************************************************************************************/
 class TestCode_Controller {
 
-	function process($request) {
+	static function process($request) {
 		$loginModel = Session_Controller::getLoginContext();
 		
 		$client = new Vtiger_WSClient($loginModel->getURL());
@@ -31,7 +31,7 @@ class TestCode_Controller {
 		}
 	}
 
-	function doLayout() {
+	static function doLayout() {
 		$testcodescripts='';
 		foreach (glob('testcode/*.{php}',GLOB_BRACE) as $tcode) {
 			$tc = basename($tcode);
@@ -77,7 +77,7 @@ class TestCode_Controller {
 EOT;
 	}
 
-	function doLayoutCode() {
+	static function doLayoutCode() {
 		echo <<<EOT
 <link rel="stylesheet" href="assets/codemirror/lib/codemirror.css">
 <link rel="stylesheet" href="assets/codemirror/addon/dialog/dialog.css">
@@ -133,7 +133,7 @@ EOT;
 EOT;
 	}
 
-	function doExecCode() {
+	static function doExecCode() {
 		function debugmsg($name,$var='') {
 			$str = "<table border=0><tr><th align=left>$name</th></tr><tr><td>";
 			$str.= print_r($var,true);
@@ -166,7 +166,7 @@ EOT;
 		echo json_encode($rdo);
 	}
 
-	function doExecCodeDirect($script) {
+	static function doExecCodeDirect($script) {
 		if (!empty($script)) {
 			function debugmsg($name,$var) {};
 			$loginModel = $_SESSION['vtbrowser_auth'];

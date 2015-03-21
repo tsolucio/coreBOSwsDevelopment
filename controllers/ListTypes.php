@@ -9,7 +9,7 @@
  ************************************************************************************/
 class ListTypes_Controller {
 
-	function process($request) {
+	static function process($request) {
 		$loginModel = Session_Controller::getLoginContext();
 		
 		$client = new Vtiger_WSClient($loginModel->getURL());
@@ -38,6 +38,7 @@ class ListTypes_Controller {
 					echo "<tr><th>REST ID</th><th>Can Create</th><th>Can Update</th><th>Can Delete</th><th>Can Retrieve</th></tr>";
 					echo "<tr>";
 					$desc=$client->doDescribe($module['name']);
+					if (is_array($desc)) {
 					echo sprintf("<td nowrap='nowrap'>%s</td>", $desc['idPrefix'].'x');
 					echo sprintf("<td nowrap='nowrap'>%s&nbsp;</td>", $desc['createable']);
 					echo sprintf("<td nowrap='nowrap'>%s&nbsp;</td>", $desc['updateable']);
@@ -78,6 +79,7 @@ class ListTypes_Controller {
 						}
 						echo $addinfo.'</td>';
 						echo "</tr>";
+					}
 					}
 					echo "</table>";
 				}

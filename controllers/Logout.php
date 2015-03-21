@@ -8,7 +8,7 @@
  * All Rights Reserved.
  ************************************************************************************/
 class Logout_Controller {
-	function process($request) {
+	static function process($request) {
 		Session_Controller::destroy();
 		header('Location: index.php');
 	}

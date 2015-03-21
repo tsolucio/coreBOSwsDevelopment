@@ -12,7 +12,7 @@ class Header_Controller {
 
 	public static $title = "coreBOS Webservice Development";
 	
-	function process($request) {
+	static function process($request) {
 		echo '<!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01 Transitional//EN">';
 		echo "<html>
 			<head>
@@ -34,7 +34,7 @@ class Header_Controller {
 			<h2>".Header_Controller::$title."</h2>";
 	}
 	
-	function getHeaderScripts() {
+	static function getHeaderScripts() {
 		return '
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <!-- Latest compiled and minified CSS -->
@@ -47,7 +47,7 @@ class Header_Controller {
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>';
 	}
 
-	function getMenu() {
+	static function getMenu() {
 		$rdo = '<header role="banner" id="top">
 	<nav role="navigation" class="navbar navbar-default" style="margin-bottom: 0;">
 	  <div class="navbar-header">

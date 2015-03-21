@@ -9,8 +9,8 @@
  * All Rights Reserved.
  ************************************************************************************/
 class Login_Controller {
-	
-	function process($request) {
+
+	static function process($request) {
 		
 		if (isset($request['url']))
 			$url = $request['url'];

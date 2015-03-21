@@ -17,7 +17,7 @@
  *************************************************************************************************/
 class TestCodeJS_Controller {
 
-	function process($request) {
+	static function process($request) {
 		$loginModel = Session_Controller::getLoginContext();
 		
 		$client = new Vtiger_WSClient($loginModel->getURL());
@@ -31,7 +31,7 @@ class TestCodeJS_Controller {
 		}
 	}
 
-	function doLayout() {
+	static function doLayout() {
 		$testcodescripts='';
 		foreach (glob('testcode/*.{js}',GLOB_BRACE) as $tcode) {
 			$tc = basename($tcode);
@@ -75,7 +75,7 @@ class TestCodeJS_Controller {
 EOT;
 	}
 
-	function doLayoutCode() {
+	static function doLayoutCode() {
 		$loginModel = $_SESSION['vtbrowser_auth'];
 		$cbURL = $loginModel->getURL().'/webservice.php';
 		$cbUserName = $loginModel->getUsername();

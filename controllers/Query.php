@@ -10,7 +10,7 @@
  ************************************************************************************/
 class Query_Controller {
 
-	function process($request) {
+	static function process($request) {
 		if(isset($request['q']))
 			$query = $request['q'];
 		else
