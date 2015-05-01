@@ -11,7 +11,6 @@
 class Login_Controller {
 
 	static function process($request) {
-		
 		if (isset($request['url']))
 			$url = $request['url'];
 		else 
@@ -40,7 +39,6 @@ class Login_Controller {
 				//return;
 			}
 		}
-		
 		Header_Controller::process($request);
 		?>
 		<form method='POST' action='index.php' onsubmit='$("#wserrmsg").hide();this.__submitButton.value="Verifying"; this.__submitButton.disabled=true;'>
@@ -62,7 +60,7 @@ class Login_Controller {
 		</form>
 <?php
 		if(!empty($url) && !empty($username) && !empty($accesskey) && !$checkLogin) {
-		   echo '<div class="alert alert-danger" id="wserrmsg">There is an error with the validation data given, please review and try again.</div>';
+			echo '<div class="alert alert-danger" id="wserrmsg">There is an error with the validation data given, please review and try again.</div>';
 		}
 		Footer_Controller::process($request);
 	}

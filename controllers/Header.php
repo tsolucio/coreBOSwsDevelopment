@@ -28,7 +28,6 @@ class Header_Controller {
 				}
 				</script>".Header_Controller::getHeaderScripts()."
 			</head>
-				
 		<body>".Header_Controller::getMenu()."
 		<div class='container'>
 			<h2>".Header_Controller::$title."</h2>";

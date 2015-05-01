@@ -64,7 +64,7 @@ class Query_Controller {
 					echo "<div class='alert alert-danger'><strong>ERROR:</strong> " . $lastError['message'] . "</div>";
 				}
 			} else {
-				echo "<div class='alert alert-danger'><strong>ERROR:</strong> Login failure!<div>";
+				echo "<div class='alert alert-danger'><strong>ERROR:</strong> Login failure!</div>";
 			}
 		}
 
