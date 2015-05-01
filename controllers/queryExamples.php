@@ -19,26 +19,52 @@ class QueryExamples_Controller {
 
 	public static $queries = array(
 	'select accountname from Accounts',
-	
+	'select nofield from NoModule',
+	'select accountname,nofield from Accounts',
+	"select accountname,website from Accounts where website like '%vt%'",
+	"select firstname, lastname from Contacts where firstname like '%o%' order by firstname desc limit 0,22;",
+	"select accountname,website,Accounts.accountname,Accounts.website from Accounts",
+	"select accountname,website,Accounts.accountname,Accounts.website from Accounts where website like '%vt%'",
+	"select accountname,website,Accounts.accountname,Accounts.website from Accounts where Accounts.website like '%vt%'",
+	"select firstname, lastname,Accounts.accountname,Accounts.website from Contacts where firstname like '%o%' order by firstname desc limit 0,22;",
+	"select firstname, lastname,Accounts.accountname,Accounts.website from Contacts where firstname like '%o%' order by firstname asc",
+	"select firstname, lastname,Accounts.accountname,Accounts.website from Contacts where firstname like '%o%' limit 0,22;",
+	"select firstname, lastname,Accounts.accountname,Accounts.website from Contacts where firstname like '%o%'",
+	"select potentialname,Accounts.accountname from Potentials",
+	"select potentialname,Accounts.accountname,Contacts.lastname from Potentials",
+	"select Contacts.firstname,Accounts.accountname,ticket_title from HelpDesk",
+	"select * from projecttask where related.project='32x6613'",
+	"select * from projecttask where related.project='32x6613' and projecttaskname='tttt'",
+	"select * from documents where related.accounts='11x12'",
+	"select * from documents where filelocationtype='E' and related.contacts='12x22'",
+	"Select * from Documents where (related.Contacts='12x22') AND (filelocationtype LIKE '%I%') LIMIT 5;",
+	"select * from modcomments where related.helpdesk='17x114'",
+	"select * from modcomments where related.helpdesk='17x114' and commentcontent like 'hdcc%'",
+	"select * from products where related.products='14x58'",
+	"select * from products where related.contacts='12x22'",
+	"select * from products where related.contacts='12x22' and productcategory='Software'",
+	"Select * from Products where related.Contacts='12x22' LIMIT 5;",
+	"Select * from Products where related.Contacts='12x22' order by productname LIMIT 5;",
 	);
 	static function process() {
 		$loginModel = Session_Controller::getLoginContext();
 		$client = new Vtiger_WSClient($loginModel->getURL());
 		$login  = $client->doLogin($loginModel->getUsername(), $loginModel->getAccessKey());
 		if($login) {
+			echo "<div class='alert alert-info'>Many of these queries are specific to the coreBOS application they were created for and will fail on your install. You should just need to tweek the IDs and conditions to get them working.</div>";
 			foreach (QueryExamples_Controller::$queries as $query) {
 				echo '<b>'.$query.'</b><br>';
 				$result = $client->doQuery($query);
 				QueryExamples_Controller::showresult($result);
 			}
 		} else {
-			echo "<div class='alert alert-danger'><strong>ERROR:</strong> Login failure!<div>";
+			echo "<div class='alert alert-danger'><strong>ERROR:</strong> Login failure!</div>";
 		}
 	}
 
-	static function showresult($ok=true) {
-		if ($ok) {
-			echo '<span style="color:green">Query OK</span><br>';
+	static function showresult($results) {
+		if (is_array($results)) {
+			echo '<span style="color:green">Query OK</span>&nbsp;RESULTS: '.count($results).'<br>';
 		} else {
 			echo '<span style="color:red">Query NOK</span><br>';
 		}
