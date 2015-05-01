@@ -35,16 +35,8 @@ class Header_Controller {
 	}
 	
 	static function getHeaderScripts() {
-		return '
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>';
+		return '<script src="assets/jquery.min.js"></script>
+<link rel="stylesheet" href="assets/bootstrap.min.css">';
 	}
 
 	static function getMenu() {
@@ -57,7 +49,7 @@ class Header_Controller {
 	      <span class="icon-bar"></span>
 	      <span class="icon-bar"></span>
 	    </button>
-        <a href="//corebos.org" class="navbar-brand"><img src="assets/app-logo.png" style="max-height: 50px;top:0;position:absolute;"></a>
+        <a href="http://corebos.org" class="navbar-brand"><img src="assets/app-logo.png" style="max-height: 50px;top:0;position:absolute;"></a>
 	  </div>
 	  <!-- /.navbar-header -->
 	  <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -69,7 +61,7 @@ class Header_Controller {
 			$rdo.= '<li><a href="index.php?action=TestCodeJS">Test Code JS</a></li>';
 			$rdo.= '<li style="margin-left:40px;">&nbsp;</li>';
 		}
-		$rdo.= '<li><a href="http://corebos.org/page/corebos-documentation" target="_blank">Documentation</a></li>
+		$rdo.= '<li><a href="http://corebos.org/documentation" target="_blank">Documentation</a></li>
 			<li><a href="http://corebos.org/page/corebos-participate" target="_blank">Participate</a></li>
 			<li><a href="http://discussions.corebos.org" target="_blank">Forum</a></li>
 			<li><a href="http://corebos.org/blog" target="_blank">Blog</a></li>
@@ -87,7 +79,7 @@ class Header_Controller {
 	  </div>
 	  <!-- /.navbar-collapse -->
 	</nav>
-	<div class="row span12 pull-right small"><a href="http://corebos.org" style="color: #AD0900;margin-right: 40px;">Proud member of the coreBOS Family</a></div>
+	<div class="row span12 pull-right small"><a href="http://corebos.org" style="color: #04579b;margin-right: 40px;">Proud member of the coreBOS Family</a></div>
 </header>';
 		return $rdo;
 	}
