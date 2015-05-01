@@ -39,11 +39,12 @@ class Query_Controller {
 
 				$result = $client->doQuery($query);
 
-				if($result) {
+				if(is_array($result)) {
+					if (count($result)==0) {
+						echo "<div class='alert alert-info'><strong>No results found!</strong></div>";
+					} else {
 					echo "<table cellpadding='3' cellspacing='0' class='table table-striped small'>";
-
 					$columns = $client->getResultColumns($result);
-						
 					echo "<tr>";
 					foreach($columns as $column) {
 						echo sprintf("<th nowrap='nowrap'>%s</th>", $column);
@@ -57,8 +58,8 @@ class Query_Controller {
 						}
 						echo "</tr>";
 					}
-
 					echo "</table>";
+					}
 				} else {
 					$lastError = $client->lastError();
 					echo "<div class='alert alert-danger'><strong>ERROR:</strong> " . $lastError['message'] . "</div>";
