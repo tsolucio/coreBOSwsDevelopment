@@ -59,6 +59,12 @@ if(Session_Controller::hasLoginContext()) {
 			include_once 'controllers/TestCode.php';
 			TestCode_Controller::doExecCodeDirect($_REQUEST['script']);
 			break;
+		case 'queryExamples':
+			Header_Controller::process($_REQUEST);
+			include_once 'controllers/queryExamples.php';
+			QueryExamples_Controller::process();
+			Footer_Controller::process($_REQUEST);
+			break;
 		case 'VQL':
 		default:
 			Header_Controller::process($_REQUEST);
