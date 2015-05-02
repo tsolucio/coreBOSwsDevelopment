@@ -30,6 +30,8 @@ class QueryExamples_Controller {
 	"select firstname, lastname,Accounts.accountname,Accounts.website from Contacts where firstname like '%o%' order by firstname asc",
 	"select firstname, lastname,Accounts.accountname,Accounts.website from Contacts where firstname like '%o%' limit 0,22;",
 	"select firstname, lastname,Accounts.accountname,Accounts.website from Contacts where firstname like '%o%'",
+	"select firstname, lastname,Accounts.accountname from Contacts where firstname like '%o%' or firstname like '%e%' or firstname like '%s%'",
+	"select firstname, lastname,Accounts.accountname from Contacts where firstname like '%o%' or (firstname like '%e%' and firstname like '%s%')",
 	"select potentialname,Accounts.accountname from Potentials",
 	"select potentialname,Accounts.accountname,Contacts.lastname from Potentials",
 	"select Contacts.firstname,Accounts.accountname,ticket_title from HelpDesk",
