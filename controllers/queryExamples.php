@@ -30,6 +30,10 @@ class QueryExamples_Controller {
 	"select accountname,website from Accounts where website in ('www.edfggrouplimited.com','www.gooduivtiger.com')",
 	"select accountname,website,Accounts.accountname,Accounts.website from Accounts where website in ('www.edfggrouplimited.com','www.gooduivtiger.com')",
 	"select accountname,website,Accounts.accountname,Accounts.website from Accounts where Accounts.website in ('www.edfggrouplimited.com','www.gooduivtiger.com')",
+	// NOT IN
+	"select accountname,website from Accounts where website not in ('www.edfggrouplimited.com','www.gooduivtiger.com')",
+	"select accountname,website,Accounts.accountname,Accounts.website from Accounts where website not in ('www.edfggrouplimited.com','www.gooduivtiger.com')",
+	"select accountname,website from Accounts where Accounts.website not in ('www.edfggrouplimited.com','www.gooduivtiger.com')",
 	//
 	"select firstname, lastname,Accounts.accountname,Accounts.website from Contacts where firstname like '%o%' order by firstname desc limit 0,22;",
 	"select firstname, lastname,Accounts.accountname,Accounts.website from Contacts where firstname like '%o%' order by firstname asc",
