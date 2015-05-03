@@ -26,6 +26,11 @@ class QueryExamples_Controller {
 	"select accountname,website,Accounts.accountname,Accounts.website from Accounts",
 	"select accountname,website,Accounts.accountname,Accounts.website from Accounts where website like '%vt%'",
 	"select accountname,website,Accounts.accountname,Accounts.website from Accounts where Accounts.website like '%vt%'",
+	// IN
+	"select accountname,website from Accounts where website in ('www.edfggrouplimited.com','www.gooduivtiger.com')",
+	"select accountname,website,Accounts.accountname,Accounts.website from Accounts where website in ('www.edfggrouplimited.com','www.gooduivtiger.com')",
+	"select accountname,website,Accounts.accountname,Accounts.website from Accounts where Accounts.website in ('www.edfggrouplimited.com','www.gooduivtiger.com')",
+	//
 	"select firstname, lastname,Accounts.accountname,Accounts.website from Contacts where firstname like '%o%' order by firstname desc limit 0,22;",
 	"select firstname, lastname,Accounts.accountname,Accounts.website from Contacts where firstname like '%o%' order by firstname asc",
 	"select firstname, lastname,Accounts.accountname,Accounts.website from Contacts where firstname like '%o%' limit 0,22;",
