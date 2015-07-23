@@ -69,6 +69,7 @@ class QueryExamples_Controller {
 	"select * from products where related.contacts='12x22' and productcategory='Software'",
 	"Select * from Products where related.Contacts='12x22' LIMIT 5;",
 	"Select * from Products where related.Contacts='12x22' order by productname LIMIT 5;",
+	"select Contacts.firstname,Salesorder.subject,amount,paid from cobropago where Contacts.homephone='902886938'",
 	);
 	static function process() {
 		$loginModel = Session_Controller::getLoginContext();
