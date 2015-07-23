@@ -71,6 +71,7 @@ class QueryExamples_Controller {
 	"Select * from Products where related.Contacts='12x22' order by productname LIMIT 5;",
 	"select Contacts.firstname,Salesorder.subject,amount,paid from cobropago where Contacts.homephone='902886938'",
 	"select Products.productname,ticket_title from HelpDesk  where Products.productname   >   =   'áé    íÑÇ'",
+	"select Products.productname,ticket_title from HelpDesk  where Products.productname   >   =   'áé>    =íÑÇ'",
 	);
 	static function process() {
 		$loginModel = Session_Controller::getLoginContext();
