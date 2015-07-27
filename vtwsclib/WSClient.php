@@ -159,15 +159,15 @@ class Vtiger_WSClient {
 	function doLogout(){
 		$this->__checkLogin();
 		$postdata = Array(
-		'operation' => 'logout',
-		'sessionName'  => $this->_sessionid
+			'operation' => 'logout',
+			'sessionName'  => $this->_sessionid
 		);
 		$resultdata = $this->_client->doPost($postdata, true);
 		if($this->hasError($resultdata)) {
 			return false;
 		}
 		return $resultdata['result'];
-	}			
+	}
 
 	/**
 	 * Do Query Operation.
