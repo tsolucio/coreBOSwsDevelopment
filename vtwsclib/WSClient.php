@@ -160,7 +160,7 @@ class Vtiger_WSClient {
 		$this->__checkLogin();
 		$postdata = Array(
 		'operation' => 'logout',
-		'sessionName'  => this->_sessionid
+		'sessionName'  => $this->_sessionid
 		);
 		$resultdata = $this->_client->doPost($postdata, true);
 		if($this->hasError($resultdata)) {
