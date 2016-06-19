@@ -19,8 +19,8 @@ class QueryExamples_Controller {
 
 	public static $queries = array(
 	'select accountname from Accounts',
-	'select nofield from NoModule',
-	'select accountname,nofield from Accounts',
+	'select nofield from NoModule; <span style="color:red">Query NOK!!</span>',
+	'select accountname,nofield from Accounts; <span style="color:red">Query NOK!!</span>',
 	"select accountname,website from Accounts where website like '%vt%'",
 	"select firstname, lastname from Contacts where firstname like '%o%' order by firstname desc limit 0,22;",
 	"select accountname,website,Accounts.accountname,Accounts.website from Accounts",
@@ -78,12 +78,14 @@ class QueryExamples_Controller {
 		$client = new Vtiger_WSClient($loginModel->getURL());
 		$login  = $client->doLogin($loginModel->getUsername(), $loginModel->getAccessKey());
 		if($login) {
-			echo "<div class='alert alert-info'>Many of these queries are specific to the coreBOS application they were created for and will fail on your install. You should just need to tweek the IDs and conditions to get them working.</div>";
+			echo "<div class='alert alert-info' style='font-size:large'>The queries below are a subset of our <a href='https://github.com/tsolucio/coreBOSTests/blob/master/include/Webservices/VtigerModuleOperation_QueryTest.php'>webservice query language test suite</a> and shown only as examples.</div>";
+			echo "<table width=100% class='table table-striped table-hover'><tbody>";
 			foreach (QueryExamples_Controller::$queries as $query) {
-				echo '<b>'.$query.'</b><br>';
-				$result = $client->doQuery($query);
-				QueryExamples_Controller::showresult($result);
+				echo '<tr><td>'.$query.'</td></tr>';
+				//$result = $client->doQuery($query);
+				//QueryExamples_Controller::showresult($result);
 			}
+			echo "</tbody></table>";
 		} else {
 			echo "<div class='alert alert-danger'><strong>ERROR:</strong> Login failure!</div>";
 		}
