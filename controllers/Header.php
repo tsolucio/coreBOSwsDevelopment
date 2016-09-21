@@ -61,9 +61,9 @@ class Header_Controller {
 			$rdo.= '<li style="margin-left:40px;">&nbsp;</li>';
 		}
 		$rdo.= '<li><a href="http://corebos.org/documentation" target="_blank">Documentation</a></li>
-			<li><a href="http://corebos.org/page/corebos-participate" target="_blank">Participate</a></li>
+			<li><a href="http://corebos.org/page/get-involved" target="_blank">Participate</a></li>
 			<li><a href="http://discussions.corebos.org" target="_blank">Forum</a></li>
-			<li><a href="http://corebos.org/blog" target="_blank">Blog</a></li>
+			<li><a href="http://www.corebos.org/post/new-version-coreboswsdev" target="_blank">Blog</a></li>
 			<li><a href="http://corebos.org/page/contact" target="_blank">Contact</a></li>';
 		if(Session_Controller::hasLoginContext()) {
 			$loginModel = Session_Controller::getLoginContext();
