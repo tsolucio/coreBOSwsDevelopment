@@ -18,6 +18,6 @@ if($jsonResponse['success']==false) {
 	echo 'failed!';
 } else {
 	$savedObject = $jsonResponse['result'];
-	var_dump($savedObject);
+	print_r($savedObject);
 }
 ?>
