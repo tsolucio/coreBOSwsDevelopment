@@ -23,12 +23,26 @@ class Login_Controller {
 			$accesskey = $request['accesskey'];
 		else
 			$accesskey = '';
+		if (isset($request['password']))
+			$password = $request['password'];
+		else
+			$password = '';
 
-		if(!empty($url) && !empty($username) && !empty($accesskey)) {
-			$loginModel = new Login_Model($url, $username, $accesskey);
-			
+		$checkLogin = false;
+		$loginModel = false;
+		if (!empty($url) && !empty($username)) {
+			if (!empty($accesskey) && $request['accesskeycheck']=='on') {
+				$loginModel = new Login_Model($url, $username, $accesskey);
+				$withpassword = false;
+			}
+			if (!empty($password) && $request['passwordcheck']=='on') {
+				$loginModel = new Login_Model($url, $username, $password);
+				$withpassword = true;
+			}
+		}
+		if ($loginModel) {
 			$client = new Vtiger_WSClient($loginModel->getURL());
-			$checkLogin  = $client->doLogin($loginModel->getUsername(), $loginModel->getAccessKey());
+			$checkLogin = $client->doLogin($loginModel->getUsername(), $loginModel->getAccessKey(), $withpassword);
 
 			if($checkLogin) {
 				Session_Controller::setLoginContext($loginModel);
@@ -52,14 +66,20 @@ class Login_Controller {
 		</div>
 		<div class='form-group'>
 			<label for='accesskey'>Access key</label>
+			<input type="checkbox" name="accesskeycheck" checked>
 			<input type='text' name='accesskey' value='<?php echo $accesskey; ?>' size=40 class='form-control'>
+		</div>
+		<div class='form-group'>
+			<label for='accesskey'>Password</label>
+			<input type="checkbox" name="passwordcheck">
+			<input type='text' name='password' value='' size=40 class='form-control'>
 		</div>
 		<div class='form-group'>
 			<input class='btn btn-primary btn-large' type='submit' value='Login &raquo;' name='__submitButton'>
 		</div>
 		</form>
 <?php
-		if(!empty($url) && !empty($username) && !empty($accesskey) && !$checkLogin) {
+		if(!empty($url) && !empty($username) && (!empty($accesskey) || !empty($password)) && !$checkLogin) {
 			echo '<div class="alert alert-danger" id="wserrmsg">There is an error with the validation data given, please review and try again.</div>';
 		}
 		Footer_Controller::process($request);
