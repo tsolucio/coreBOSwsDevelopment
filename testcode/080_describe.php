@@ -32,7 +32,7 @@ if($jsonResponse['success']==false) {
 	$fielddesc="$fieldname\nField: ".$field['name']."\nMandatory: ";
 	$fielddesc.=($field['name'] ? 'yes' : 'no')."\nNull: ".($field['nullable'] ? 'yes' : 'no');
 	$fielddesc.="\nEditable: ".($field['editable'] ? 'yes' : 'no')."\nDefault: ".$field['default'];
-	$fielddesc.="\nType: ".$field['type']['name']."\nFormat: ".$field['type']['format'];
+	$fielddesc.="\nType: ".$field['type']['name']."\nFormat: ".$field['type']['name'];
 	$addinfo='';
 	if (isset($field['type']['refersTo'])) {
 		$addinfo="\nRefers To: ";
@@ -41,7 +41,7 @@ if($jsonResponse['success']==false) {
 	if (isset($field['type']['picklistValues'])) {
 		$addinfo="\nPicklist values: ";
 		foreach($field['type']['picklistValues'] as $plvs=>$plvn) $addinfo.=$plvn['value'].", ";
-		$addinfo.="\nDefault: ".$field['type']['default'];
+		$addinfo.="\nDefault: ".$field['default'];
 	}
 	$fielddesc.=$addinfo;
 	echo "<div data-toggle='tooltip' data-placement='right' title='$fielddesc'>$fieldname,</div>";
