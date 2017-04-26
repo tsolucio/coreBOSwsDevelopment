@@ -76,7 +76,7 @@ class QueryExamples_Controller {
 	static function process() {
 		$loginModel = Session_Controller::getLoginContext();
 		$client = new Vtiger_WSClient($loginModel->getURL());
-		$login  = $client->doLogin($loginModel->getUsername(), $loginModel->getAccessKey());
+		$login  = $client->doLogin($loginModel->getUsername(), $loginModel->getAccessKey(), $loginModel->getWithPassword());
 		if($login) {
 			echo "<div class='alert alert-info' style='font-size:large'>The queries below are a subset of our <a href='https://github.com/tsolucio/coreBOSTests/blob/master/include/Webservices/VtigerModuleOperation_QueryTest.php'>webservice query language test suite</a> and shown only as examples.</div>";
 			echo "<table width=100% class='table table-striped table-hover'><tbody>";

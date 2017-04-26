@@ -32,12 +32,12 @@ class Login_Controller {
 		$loginModel = false;
 		if (!empty($url) && !empty($username)) {
 			if (!empty($accesskey) && $request['accesskeycheck']=='on') {
-				$loginModel = new Login_Model($url, $username, $accesskey);
 				$withpassword = false;
+				$loginModel = new Login_Model($url, $username, $accesskey, $withpassword);
 			}
 			if (!empty($password) && $request['passwordcheck']=='on') {
-				$loginModel = new Login_Model($url, $username, $password);
 				$withpassword = true;
+				$loginModel = new Login_Model($url, $username, $password, $withpassword);
 			}
 		}
 		if ($loginModel) {

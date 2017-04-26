@@ -13,11 +13,13 @@ class Login_Model {
 	private $accesskey;
 	private $userid;
 	private $sessionid;
+	private $withPassword=false;
 
-	function __construct($url, $username, $accesskey) {
+	function __construct($url, $username, $accesskey, $withPassword=false) {
 		$this->url = $url;
 		$this->username = $username;
 		$this->accesskey = $accesskey;
+		$this->withPassword = $withPassword;
 	}
 	
 	function getURL() {
@@ -39,7 +41,15 @@ class Login_Model {
 	function setUserId($usrid) {
 		$this->userid = $usrid;
 	}
-	
+
+	function setWithPassword($withPassword) {
+		$this->withPassword = $withPassword;
+	}
+
+	function getWithPassword() {
+		return $this->withPassword;
+	}
+
 	function getSessionId() {
 		return $this->sessionid;
 	}

@@ -13,7 +13,7 @@ class ListTypes_Controller {
 		$loginModel = Session_Controller::getLoginContext();
 		
 		$client = new Vtiger_WSClient($loginModel->getURL());
-		$login  = $client->doLogin($loginModel->getUsername(), $loginModel->getAccessKey());
+		$login  = $client->doLogin($loginModel->getUsername(), $loginModel->getAccessKey(), $loginModel->getWithPassword());
 
 		if($login) {
 

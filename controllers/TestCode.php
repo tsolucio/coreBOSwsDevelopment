@@ -21,7 +21,7 @@ class TestCode_Controller {
 		$loginModel = Session_Controller::getLoginContext();
 		
 		$client = new Vtiger_WSClient($loginModel->getURL());
-		$login  = $client->doLogin($loginModel->getUsername(), $loginModel->getAccessKey());
+		$login  = $client->doLogin($loginModel->getUsername(), $loginModel->getAccessKey(), $loginModel->getWithPassword());
 
 		if($login) {
 			TestCode_Controller::doLayout();
@@ -147,9 +147,10 @@ EOT;
 		$cbUserName = $loginModel->getUsername();
 		$cbUserID = $loginModel->getUserId();
 		$cbAccessKey = $loginModel->getAccessKey();
+		$cbWithPassword = $loginModel->getWithPassword();
 		$cbSessionID = $loginModel->getSessionId();
 		$cbconn = new Vtiger_WSClient($cbURL);
-		$cbconn->doLogin($cbUserName, $cbAccessKey);
+		$cbconn->doLogin($cbUserName, $cbAccessKey, $cbWithPassword);
 		$httpc = $cbconn->_client;
 		$dmsg = '';
 		$toexec = urldecode($_REQUEST['tcexec']);
