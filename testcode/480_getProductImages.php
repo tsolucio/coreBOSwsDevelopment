@@ -1,6 +1,6 @@
 <?php
 $params = "sessionName=$cbSessionID&operation=getProductImages&id=14x2616";
-//query must be GET Request.
+// must be GET Request.
 $response = $httpc->fetch_url("$cbURL?$params");
 $dmsg.= debugmsg("Raw response (json) getPdo",$response);
 
@@ -8,9 +8,9 @@ $dmsg.= debugmsg("Raw response (json) getPdo",$response);
 $jsonResponse = json_decode($response, true);
 $dmsg.= debugmsg("Webservice response getPdo",$jsonResponse);
 
-if($jsonResponse['success']==false) {
-    $dmsg.= debugmsg('getPdo failed: '.$jsonResponse['message']);
-    echo 'getPdo failed!';
+if ($jsonResponse['success']==false) {
+	$dmsg.= debugmsg('getPdo failed: '.$jsonResponse['message']);
+	echo 'getPdo failed!';
 } else {
 	$retrievedObjects = $jsonResponse['result']['results'];
 	if ($retrievedObjects>0) {
