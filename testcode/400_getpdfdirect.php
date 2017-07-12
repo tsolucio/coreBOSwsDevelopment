@@ -5,7 +5,7 @@ $invoiceId=$_REQUEST['invoiceID'];
 $params = array("sessionName"=>$cbSessionID, "operation"=>'getpdfdata', "id"=>$invoiceId);
 //Create must be POST Request.
 $response = $httpc->send_post_data($cbURL, $params, true);
-$dmsg.= debugmsg("Raw response (json) GetPDFData",$response);
+$dmsg= debugmsg("Raw response (json) GetPDFData",$response);
 
 //decode the json encode response from the server.
 $jsonResponse = json_decode($response,true);

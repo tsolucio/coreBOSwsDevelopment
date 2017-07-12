@@ -2,12 +2,12 @@
 //fill in the details of the invoice id.
 // select subject,id from invoice
 // 16x90 is an existing invoice
-$invoiceId='16x90';
+$invoiceId='7x2816';
 //sessionId is obtained from loginResult.
 $params = array("sessionName"=>$cbSessionID, "operation"=>'getpdfdata', "id"=>$invoiceId);
 //Create must be POST Request.
 $response = $httpc->send_post_data($cbURL, $params, true);
-$dmsg.= debugmsg("Raw response (json) GetPDFData",$response);
+$dmsg= debugmsg("Raw response (json) GetPDFData",$response);
 
 //decode the json encode response from the server.
 $jsonResponse = json_decode($response,true);
