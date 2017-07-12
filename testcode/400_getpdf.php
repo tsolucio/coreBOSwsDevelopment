@@ -54,7 +54,7 @@ if($jsonResponse['success']==false) {
 			$('body').append(io);
 			setTimeout(function() {
 				io.remove();
-			}, 5000);
+			}, 15000);
 		}
 		</script>";
 	echo "<br><a href='javascript:doPDFDownload();' class='btn btn-primary btn-large'>Download PDF</a>";
