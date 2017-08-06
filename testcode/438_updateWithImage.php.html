@@ -1,0 +1,19 @@
+<h3 id="create_document">Update Record with Image</h4>
+<h4>Purpose:</h4>
+<p>Permit updating records with one or more associated image attachments.</p>
+<p>This call is exactly the same as Update, in fact it actually uses Update, the only difference is that there is a special field parameter that permits you to send in the images for each image field.</p>
+<h4>Send as:</h4>
+<p><code>POST</code></p>
+<h4>Parameters:</h4><p>
+<table width=100% border=1 class="table table-hover">
+<tr><td style="background-color:whitesmoke">attachments</td><td>array: <br>
+&nbsp;&nbsp;fieldname => array<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'name'=>filename<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'type'=>file mime type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'size'=>file size<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'content'=>base64_encode({file})<br>
+&nbsp;&nbsp;{repeat for all image fields}<br>
+</td></tr>
+</table>
+</p>
+
