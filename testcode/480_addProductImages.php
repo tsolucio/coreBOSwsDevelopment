@@ -24,11 +24,12 @@ $files[] = array(
 
 $response = $cbconn->doInvoke('addProductImages',
 	array('id'=>$productID,'files'=>json_encode($files)));
-$dmsg = debugmsg("Raw response (json) Update ",$response);
+$dmsg = debugmsg("Raw response (json) add image ",$response);
 
-if ($response) {
-	echo "Product updated with images";
+if ($response['Error']=='0') {
+	echo "Product updated with images<br>";
 } else {
-	echo "Error uploading Product images";
+	echo "Error uploading Product images<br>";
 }
+var_dump($response);
 ?>
