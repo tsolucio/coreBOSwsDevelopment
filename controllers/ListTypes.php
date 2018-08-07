@@ -26,7 +26,8 @@ class ListTypes_Controller {
 					$modOptions.= "<option value='".$module['name']."'>".$module['name']."</option>";
 				}
 				foreach($modules as $module) {
-					echo "<div class='row' id='".$module['name']."' style='vertical-align:bottom;'><span class='span5 pull-left'><h3>".$module['name']."</h3></span>";
+					$desc=$client->doDescribe($module['name']);
+					echo "<div class='row' id='".$module['name']."' style='vertical-align:bottom;'><span class='span5 pull-left'><h3>".$module['name']." (".$desc['label_raw'].'/'.$desc['label'].") </h3></span>";
 					echo "<span class='span1 pull-right' style='margin-left:10px;margin-right:60px;margin-top: 30px;'>";
 					echo "<a href='#top'><img src='assets/go_top.png'></a>";
 					echo "</span>";
@@ -37,7 +38,6 @@ class ListTypes_Controller {
 					echo "<table class='table table-striped small table-condensed'>";
 					echo "<tr><th>REST ID</th><th>Can Create</th><th>Can Update</th><th>Can Delete</th><th>Can Retrieve</th></tr>";
 					echo "<tr>";
-					$desc=$client->doDescribe($module['name']);
 					if (is_array($desc)) {
 					echo sprintf("<td nowrap='nowrap'>%s</td>", $desc['idPrefix'].'x');
 					echo sprintf("<td nowrap='nowrap'>%s&nbsp;</td>", $desc['createable']);
@@ -49,7 +49,7 @@ class ListTypes_Controller {
 					echo "<tr><th>Field</th><th>Information</th><th>Block</th><th>Type</th><th width='30%'>Reference/Values</th></tr>";
 					foreach ($desc['fields'] as $field){
 						$fieldname=$field['label'];
-						echo "<tr><td nowrap='nowrap'><b>".$fieldname.'</b><br>'.$field['name'].'</td>';
+						echo "<tr><td nowrap='nowrap'><b>".$fieldname.'</b><br>Field: '.$field['name'].'<br>Label Raw: '.$field['label_raw'].'</td>';
 						echo "<td>";
 						$fielddesc="Mandatory: ";
 						$fielddesc.=($field['mandatory'] ? 'yes' : 'no')."<br>Null: ".($field['nullable'] ? 'yes' : 'no');
