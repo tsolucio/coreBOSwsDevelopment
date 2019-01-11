@@ -36,7 +36,7 @@ class ListTypes_Controller {
 					echo '</span>';
 					echo '</div>';
 					echo "<table class='table table-striped small table-condensed'>";
-					echo '<tr><th>REST ID</th><th>Can Create</th><th>Can Update</th><th>Can Delete</th><th>Can Retrieve</th></tr>';
+					echo '<tr><th>REST ID</th><th>Can Create</th><th>Can Update</th><th>Can Delete</th><th>Can Retrieve</th><th>Is Entity</th></tr>';
 					echo '<tr>';
 					if (is_array($desc)) {
 						echo sprintf("<td nowrap='nowrap'>%s</td>", $desc['idPrefix'].'x');
@@ -44,6 +44,20 @@ class ListTypes_Controller {
 						echo sprintf("<td nowrap='nowrap'>%s&nbsp;</td>", $desc['updateable']);
 						echo sprintf("<td nowrap='nowrap'>%s&nbsp;</td>", $desc['deleteable']);
 						echo sprintf("<td nowrap='nowrap'>%s&nbsp;</td>", $desc['retrieveable']);
+						echo sprintf("<td nowrap='nowrap'>%s&nbsp;</td>", $desc['isEntity']);
+						echo '</tr></table>';
+						echo "<table class='table table-striped small table-condensed'>";
+						echo '<tr><th>Filter Fields</th><th>Link Fields</th><th>Page Size</th><th>Label Field</th></tr>';
+						echo '<tr>';
+						echo sprintf("<td nowrap='nowrap'>%s</td>", implode(', ', $desc['filterFields']['fields']));
+						echo sprintf("<td nowrap='nowrap'>%s</td>", implode(', ', $desc['filterFields']['linkfields']));
+						echo sprintf("<td nowrap='nowrap'>%s</td>", $desc['filterFields']['pagesize']);
+						echo sprintf("<td nowrap='nowrap'>%s</td>", $desc['labelFields']);
+						echo '</tr></table>';
+						echo "<table class='table table-striped small table-condensed'>";
+						echo '<tr><th>Related Modules</th></tr>';
+						echo '<tr>';
+						echo sprintf("<td>%s</td>", implode(', ', array_keys($desc['relatedModules'])));
 						echo '</tr></table>';
 						echo "<table class='table table-striped small table-condensed'>";
 						echo "<tr><th>Field</th><th>Information</th><th>Block</th><th>Type</th><th width='30%'>Reference/Values</th></tr>";
@@ -83,12 +97,22 @@ class ListTypes_Controller {
 							$addinfo='';
 							if (isset($field['type']['refersTo'])) {
 								foreach ($field['type']['refersTo'] as $capts) {
-									$addinfo.="$capts, ";
+									$addinfo.="$capts, <br>";
 								}
 							}
 							if (isset($field['type']['picklistValues'])) {
 								foreach ($field['type']['picklistValues'] as $plvn) {
-									$addinfo.=$plvn['value'].', ';
+									$addinfo.=$plvn['value'].' => '.$plvn['label'].'<br>';
+								}
+							}
+							if (isset($field['type']['assignto'])) {
+								$addinfo .= 'Assign to:<br><b>'.$field['type']['assignto']['users']['label'].':</b><br>';
+								foreach ($field['type']['assignto']['users']['options'] as $plvn) {
+									$addinfo.=$plvn['userid'].' => '.$plvn['username'].'<br>';
+								}
+								$addinfo .= '<br><b>'.$field['type']['assignto']['groups']['label'].':</b><br>';
+								foreach ($field['type']['assignto']['groups']['options'] as $plvn) {
+									$addinfo.=$plvn['groupid'].' => '.$plvn['groupname'].'<br>';
 								}
 							}
 							echo $addinfo.'</td>';
