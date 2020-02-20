@@ -6,7 +6,8 @@ var params = {
 		"firstname":"JSTest upsert firstname",
 		"lastname":"JSTest upsert lastname",
 		"mobile":"02220303030",
-		"leadsource":"archireport"
+		"leadsource":"archireport",
+		"assigned_user_id":"19x5"
 	}),
 	"searchOn":"email",
 	"updatedfields":"email ,firstname, lastname, mobile, leadsource"
