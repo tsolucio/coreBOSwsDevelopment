@@ -27,7 +27,7 @@ class ListTypes_Controller {
 				foreach ($modules as $module) {
 					$desc=$client->doDescribe($module['name']);
 					echo "<div class='row' id='".$module['name']."' style='vertical-align:bottom;'><span class='span5 pull-left'><h3>"
-						.$module['name'].' ('.$desc['label_raw'].'/'.$desc['label'].') </h3></span>';
+						.$module['name'].' ('.(isset($desc['label_raw']) ? $desc['label_raw'] : '').'/'.$desc['label'].') </h3></span>';
 					echo "<span class='span1 pull-right' style='margin-left:10px;margin-right:60px;margin-top: 30px;'>";
 					echo "<a href='#top'><img src='assets/go_top.png'></a>";
 					echo '</span>';
@@ -49,8 +49,8 @@ class ListTypes_Controller {
 						echo "<table class='table table-striped small table-condensed'>";
 						echo '<tr><th>Filter Fields</th><th>Link Fields</th><th>Page Size</th><th>Label Field</th></tr>';
 						echo '<tr>';
-						echo sprintf("<td nowrap='nowrap'>%s</td>", implode(', ', $desc['filterFields']['fields']));
-						echo sprintf("<td nowrap='nowrap'>%s</td>", implode(', ', $desc['filterFields']['linkfields']));
+						echo sprintf("<td nowrap='nowrap'>%s</td>", empty($desc['filterFields']['fields']) ? '' : implode(', ', $desc['filterFields']['fields']));
+						echo sprintf("<td nowrap='nowrap'>%s</td>", empty($desc['filterFields']['linkfields']) ? '' : implode(', ', $desc['filterFields']['linkfields']));
 						echo sprintf("<td nowrap='nowrap'>%s</td>", $desc['filterFields']['pagesize']);
 						echo sprintf("<td nowrap='nowrap'>%s</td>", $desc['labelFields']);
 						echo '</tr></table>';
@@ -63,7 +63,7 @@ class ListTypes_Controller {
 						echo "<tr><th>Field</th><th>Information</th><th>Block</th><th>Type</th><th width='30%'>Reference/Values</th></tr>";
 						foreach ($desc['fields'] as $field) {
 							$fieldname=$field['label'];
-							echo "<tr><td nowrap='nowrap'><b>".$fieldname.'</b><br>Field: '.$field['name'].'<br>Label Raw: '.$field['label_raw'].'</td>';
+							echo "<tr><td nowrap='nowrap'><b>".$fieldname.'</b><br>Field: '.$field['name'].'<br>Label Raw: '.(isset($field['label_raw']) ? $field['label_raw'] : '').'</td>';
 							echo '<td>';
 							$fielddesc='Mandatory: ';
 							$fielddesc.=($field['mandatory'] ? 'yes' : 'no').'<br>Null: '.($field['nullable'] ? 'yes' : 'no');
