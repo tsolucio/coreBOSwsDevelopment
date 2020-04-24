@@ -28,7 +28,7 @@ $contactData  = array(
 );
 
 $response = $cbconn->doCreate($moduleName, $contactData);
-$dmsg.= debugmsg("Raw response (json) Create",$response);
+$dmsg.= debugmsg("Raw response (json) Create", $response);
 
 echo "Document created with id: ".$response['id'];
 ?>
