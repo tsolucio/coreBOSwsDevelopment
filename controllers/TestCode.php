@@ -17,13 +17,13 @@
  *************************************************************************************************/
 class TestCode_Controller {
 
-	static function process($request) {
+	public static function process($request) {
 		$loginModel = Session_Controller::getLoginContext();
-		
+
 		$client = new Vtiger_WSClient($loginModel->getURL());
 		$login  = $client->doLogin($loginModel->getUsername(), $loginModel->getAccessKey(), $loginModel->getWithPassword());
 
-		if($login) {
+		if ($login) {
 			TestCode_Controller::doLayout();
 			TestCode_Controller::doLayoutCode();
 		} else {
@@ -31,9 +31,9 @@ class TestCode_Controller {
 		}
 	}
 
-	static function doLayout() {
+	public static function doLayout() {
 		$testcodescripts='';
-		foreach (glob('testcode/*.{php}',GLOB_BRACE) as $tcode) {
+		foreach (glob('testcode/*.{php}', GLOB_BRACE) as $tcode) {
 			$tc = basename($tcode);
 			$testcodescripts.="<li><a href='index.php?action=TestCode&tcload=$tc'><h5>$tc</h5></a></li>";
 		}
@@ -42,16 +42,19 @@ class TestCode_Controller {
 		if (!empty($_REQUEST['tcload'])) {
 			$tcl = basename($_REQUEST['tcload']);
 			$loadtc = file_get_contents('testcode/'.$tcl);
-			if (file_exists('testcode/'.$tcl.'.html'))
+			if (file_exists('testcode/'.$tcl.'.html')) {
 				$loadtcdoc = file_get_contents('testcode/'.$tcl.'.html');
-			else
+			} else {
 				$loadtcdoc = '<br>&nbsp;No documentation associated to this script.';
+			}
 		}
 		echo <<<EOT
 		<div class="row">
 			<div class="col-lg-4 pull-left"><h3><a href="javascript:void(0);" onclick="$('#cbwscodediv').show();$('#cbwstestcodediv').hide();">Code</a></h3></div>
 			<div class="col-lg-1 pull-left text-center" style="top:15px;"><a href="javascript:doExecCode();" class="btn btn-primary btn-large">Execute</a></div>
-			<div class="col-lg-1 pull-left text-center" style="top:15px;"><a href="javascript:void(0);" onclick="$('#cbwstestcodediv').show();$('#cbwscodediv').hide();" class="btn btn-primary btn-large">Load</a></div>
+			<div class="col-lg-1 pull-left text-center" style="top:15px;">
+				<a href="javascript:void(0);" onclick="$('#cbwstestcodediv').show();$('#cbwscodediv').hide();" class="btn btn-primary btn-large">Load</a>
+			</div>
 			<div class="col-lg-1 pull-left text-center" style="top:15px;"><a href="javascript:clearAllTextareas();" class="btn btn-primary btn-large">Clear</a></div>
 			<div class="col-lg-3 pull-left"><h3><a href="javascript:void(0);" onclick="$('#cbwsoutput').show();$('#cbwsdocs').hide();">Output</a></h3></div>
 			<div class="col-lg-2 pull-left"><h3><a href="javascript:void(0);" onclick="$('#cbwsoutput').hide();$('#cbwsdocs').show();">Documentation</a></h3></div>
@@ -61,7 +64,9 @@ class TestCode_Controller {
 				<div class="col-lg-7 pull-left" id="cbwscodediv">
 				<textarea id="cbwscode" rows=50 cols=78 style="height:100px">$loadtc</textarea>
 				</div>
-				<div class="col-lg-7 pull-left" id="cbwstestcodediv" style="height:415px; width:98%; border: solid 1px;overflow: scroll; display:none;padding:6px;">$testcodescripts</div>
+				<div class="col-lg-7 pull-left" id="cbwstestcodediv" style="height:415px; width:98%; border: solid 1px;overflow: scroll; display:none;padding:6px;">
+				$testcodescripts
+				</div>
 			</div>
 			<div class="col-lg-5 pull-left" style="height:415px;border: 0px; padding: 0px;">
 				<div id="cbwsoutput" style="height:415px;border: solid 1px;overflow: scroll;"></div>
@@ -77,7 +82,7 @@ class TestCode_Controller {
 EOT;
 	}
 
-	static function doLayoutCode() {
+	public static function doLayoutCode() {
 		echo <<<EOT
 <link rel="stylesheet" href="assets/codemirror/lib/codemirror.css">
 <link rel="stylesheet" href="assets/codemirror/addon/dialog/dialog.css">
@@ -133,12 +138,16 @@ EOT;
 EOT;
 	}
 
-	static function doExecCode() {
-		function debugmsg($name,$var='') {
+	public static function doExecCode() {
+		function debugmsg($name, $var = '') {
 			$str = "<table border=0><tr><th align=left>$name</th></tr><tr><td>";
-			$str.= print_r($var,true);
-			if (is_array($var) and isset($var['body'])) $str.= $var['body'];
-			if (is_array($var) and isset($var['xdebug_message'])) $str.= $var['xdebug_message'];
+			$str.= print_r($var, true);
+			if (is_array($var) && isset($var['body'])) {
+				$str.= $var['body'];
+			}
+			if (is_array($var) && isset($var['xdebug_message'])) {
+				$str.= $var['xdebug_message'];
+			}
 			$str.= "</td></tr></table>";
 			return $str;
 		}
@@ -167,9 +176,10 @@ EOT;
 		echo json_encode($rdo);
 	}
 
-	static function doExecCodeDirect($script) {
+	public static function doExecCodeDirect($script) {
 		if (!empty($script)) {
-			function debugmsg($name,$var) {};
+			function debugmsg($name, $var) {
+			};
 			$loginModel = $_SESSION['vtbrowser_auth'];
 			$cbURL = $loginModel->getURL().'/webservice.php';
 			$cbUserName = $loginModel->getUsername();
@@ -182,6 +192,5 @@ EOT;
 			include_once 'testcode/'.$script;
 		}
 	}
-
 }
 ?>
