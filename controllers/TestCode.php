@@ -164,14 +164,17 @@ EOT;
 		$dmsg = '';
 		$toexec = urldecode($_REQUEST['tcexec']);
 		$toexec = preg_replace('[<\?php|\?>]', '', $toexec);
+		error_reporting(-1);
+		ini_set('display_errors', 1);
 		ob_start();
 		$execrdo = eval($toexec);
 		$out = ob_get_contents();
 		ob_end_clean();
+		$call = "<br>\n---------------------<br>\n".var_export($httpc->getlastCallResult(), true);
 		$rdo = array(
 			'result' => $execrdo,
 			'output' => $out,
-			'debug' => $dmsg
+			'debug' => $dmsg.$call
 		);
 		echo json_encode($rdo);
 	}

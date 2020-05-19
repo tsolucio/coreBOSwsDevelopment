@@ -32,6 +32,7 @@ class Curl_HTTP_Client
 	 */
 	protected $ch ;
 
+	public $lastCallResult;
 
 	/**
 	 * Default curl options
@@ -150,6 +151,10 @@ class Curl_HTTP_Client
 		}
 	}
 
+	public function getlastCallResult() {
+		return $this->lastCallResult;
+	}
+
 	/**
 	 * Fetch data from passed URL (by using http get method)
 	 *
@@ -182,8 +187,10 @@ class Curl_HTTP_Client
 		curl_setopt($this->ch, CURLOPT_TIMEOUT, $timeout);
 
 		//and finally send curl request
+		$this->lastCallResult = '';
 		$result = curl_exec($this->ch);
-
+		$this->lastCallResult = $result;
+		//error_log($result, 3, 'err');
 		if($this->has_error())
 		{
 			return false;
@@ -242,8 +249,10 @@ class Curl_HTTP_Client
 
 
 		//and finally send curl request
+		$this->lastCallResult = '';
 		$result = curl_exec($this->ch);
-
+		$this->lastCallResult = $result;
+		//error_log($result, 3, 'err');
 		if($this->has_error())
 		{
 			return false;
