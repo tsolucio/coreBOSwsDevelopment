@@ -15,46 +15,46 @@ class Login_Model {
 	private $sessionid;
 	private $withPassword=false;
 
-	function __construct($url, $username, $accesskey, $withPassword=false) {
+	public function __construct($url, $username, $accesskey, $withPassword = false) {
 		$this->url = $url;
 		$this->username = $username;
 		$this->accesskey = $accesskey;
 		$this->withPassword = $withPassword;
 	}
-	
-	function getURL() {
+
+	public function getURL() {
 		return $this->url;
 	}
-	
-	function getUsername() {
+
+	public function getUsername() {
 		return $this->username;
 	}
-	
-	function getAccessKey() {
+
+	public function getAccessKey() {
 		return $this->accesskey;
 	}
-	
-	function getUserId() {
+
+	public function getUserId() {
 		return $this->userid;
 	}
-	
-	function setUserId($usrid) {
+
+	public function setUserId($usrid) {
 		$this->userid = $usrid;
 	}
 
-	function setWithPassword($withPassword) {
+	public function setWithPassword($withPassword) {
 		$this->withPassword = $withPassword;
 	}
 
-	function getWithPassword() {
+	public function getWithPassword() {
 		return $this->withPassword;
 	}
 
-	function getSessionId() {
+	public function getSessionId() {
 		return $this->sessionid;
 	}
-	
-	function setSessionId($sessionid) {
+
+	public function setSessionId($sessionid) {
 		$this->sessionid = $sessionid;
 	}
 }

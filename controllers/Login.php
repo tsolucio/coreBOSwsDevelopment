@@ -10,24 +10,27 @@
  ************************************************************************************/
 class Login_Controller {
 
-	static function process($request) {
-		if (isset($request['url']))
+	public static function process($request) {
+		if (isset($request['url'])) {
 			$url = $request['url'];
-		else 
+		} else {
 			$url = 'http://localhost/';
-		if (isset($request['username']))
+		}
+		if (isset($request['username'])) {
 			$username = $request['username'];
-		else
+		} else {
 			$username = 'admin';
-		if (isset($request['accesskey']))
+		}
+		if (isset($request['accesskey'])) {
 			$accesskey = $request['accesskey'];
-		else
+		} else {
 			$accesskey = '';
-		if (isset($request['password']))
+		}
+		if (isset($request['password'])) {
 			$password = $request['password'];
-		else
+		} else {
 			$password = '';
-
+		}
 		$checkLogin = false;
 		$loginModel = false;
 		if (!empty($url) && !empty($username)) {
@@ -44,7 +47,7 @@ class Login_Controller {
 			$client = new Vtiger_WSClient($loginModel->getURL());
 			$checkLogin = $client->doLogin($loginModel->getUsername(), $loginModel->getAccessKey(), $withpassword);
 
-			if($checkLogin) {
+			if ($checkLogin) {
 				Session_Controller::setLoginContext($loginModel);
 				$loginModel->setUserId($client->_userid);
 				$loginModel->setSessionId($client->_sessionid);
@@ -78,12 +81,11 @@ class Login_Controller {
 			<input class='btn btn-primary btn-large' type='submit' value='Login &raquo;' name='__submitButton'>
 		</div>
 		</form>
-<?php
-		if(!empty($url) && !empty($username) && (!empty($accesskey) || !empty($password)) && !$checkLogin) {
+		<?php
+		if (!empty($url) && !empty($username) && (!empty($accesskey) || !empty($password)) && !$checkLogin) {
 			echo '<div class="alert alert-danger" id="wserrmsg">There is an error with the validation data given, please review and try again.</div>';
 		}
 		Footer_Controller::process($request);
 	}
-	
 }
 ?>

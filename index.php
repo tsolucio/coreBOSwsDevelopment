@@ -22,11 +22,12 @@ header('Content-type: text/html; charset=utf8');
 
 include_once 'controllers/Header.php';
 include_once 'controllers/Footer.php';
-if (isset($_REQUEST['action']))
+if (isset($_REQUEST['action'])) {
 	$action = $_REQUEST['action'];
-else 
+} else {
 	$action = '';
-if(Session_Controller::hasLoginContext()) {
+}
+if (Session_Controller::hasLoginContext()) {
 	switch ($action) {
 		case 'Logout':
 			include_once 'controllers/Logout.php';
@@ -77,5 +78,4 @@ if(Session_Controller::hasLoginContext()) {
 	include_once 'controllers/Login.php';
 	Login_Controller::process($_REQUEST);
 }
-
 ?>
