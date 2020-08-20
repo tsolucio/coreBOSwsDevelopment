@@ -45,6 +45,11 @@ class Login_Controller {
 		}
 		if ($loginModel) {
 			$client = new Vtiger_WSClient($loginModel->getURL());
+			if (!empty($request['roadrunner']) && $request['roadrunner']=='on') {
+				$client->_servicebase = '';
+				$client->_serviceurl = $client->getWebServiceURL($url);
+				$client->reinitalize();
+			}
 			$checkLogin = $client->doLogin($loginModel->getUsername(), $loginModel->getAccessKey(), $withpassword);
 
 			if ($checkLogin) {
@@ -60,7 +65,8 @@ class Login_Controller {
 		?>
 		<form method='POST' action='index.php' onsubmit='$("#wserrmsg").hide();this.__submitButton.value="Verifying"; this.__submitButton.disabled=true;'>
 		<div class='form-group'>
-			<label for='url'>URL</label>
+			<label for='url'>URL</label><label for='roadrunner' style="margin-left: 30px;">RoadRunner</label>
+			<input type="checkbox" name="roadrunner">
 			<input type='text' name='url' value='<?php echo $url; ?>' size=40 class='form-control'>
 		</div>
 		<div class='form-group'>
