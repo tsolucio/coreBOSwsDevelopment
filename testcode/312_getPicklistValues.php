@@ -6,7 +6,7 @@ $moduleName = 'Accounts';
 $params = array("sessionName"=>$cbSessionID, "operation"=>'getPicklistValues',
     "module"=>$moduleName);
 //Create must be POST Request.
-$response = $httpc->send_post_data($cbURL, $params, true);
+$response = $httpc->send_post_data($cbURL, $params);
 $dmsg.= debugmsg("Raw response (json) Update",$response);
 
 //decode the json encode response from the server.
