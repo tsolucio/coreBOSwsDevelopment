@@ -9,7 +9,7 @@ $params = array(
     "module"=>$moduleName,
 );
 //must be POST Request.
-$response = $httpc->send_post_data($cbURL, $params, true);
+$response = $httpc->send_post_data($cbURL, $params);
 $dmsg.= debugmsg("Raw response (json) RelInfo",$response);
 
 //decode the json encode response from the server.

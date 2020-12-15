@@ -14,7 +14,7 @@ $moduleName = 'Accounts';
 $params = array("sessionName"=>$cbSessionID, "operation"=>'create', 
     "element"=>$objectJson, "elementType"=>$moduleName);
 //Create must be POST Request.
-$response = $httpc->send_post_data($cbURL, $params, true);
+$response = $httpc->send_post_data($cbURL, $params);
 //decode the json encode response from the server.
 $jsonResponse = json_decode($response, true);
 
