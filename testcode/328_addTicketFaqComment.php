@@ -12,7 +12,7 @@ $moduleName = 'ModComments';
 $params = array("sessionName"=>$cbSessionID, "operation"=>'addTicketFaqComment', 
     "id"=>'10x64', "values"=>$objectJson);
 //Create must be POST Request.
-$response = $httpc->send_post_data($cbURL, $params, true);
+$response = $httpc->send_post_data($cbURL, $params);
 $dmsg.= debugmsg("Raw response (json) Create",$response);
 
 //decode the json encode response from the server.
