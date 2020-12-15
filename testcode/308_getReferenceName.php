@@ -7,7 +7,7 @@ $pids = serialize($ids); // to convert into a flat object string
 $params = array("sessionName"=>$cbSessionID, "operation"=>'getReferenceValue',
     "id"=>$pids);
 //Create must be POST Request.
-$response = $httpc->send_post_data($cbURL, $params, true);
+$response = $httpc->send_post_data($cbURL, $params);
 $dmsg.= debugmsg("Raw response (json) Update",$response);
 
 //decode the json encode response from the server.
