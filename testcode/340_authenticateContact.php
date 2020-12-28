@@ -7,7 +7,7 @@ $email = 'mary_smith@company.com';
 $password = 'j531iuze';
 $params = array("sessionName"=>$cbSessionID, "operation"=>'authenticateContact',
 	'email'=>$email,'password'=>$password);
-$response = $httpc->send_post_data($cbURL,$params,true);
+$response = $httpc->send_post_data($cbURL,$params);
 $dmsg.= debugmsg("Raw response (json) Query",$response);
 
 //decode the json encode response from the server.
