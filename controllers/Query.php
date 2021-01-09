@@ -42,7 +42,7 @@ class Query_Controller {
 			if ($login) {
 				$result = $client->doQuery($query);
 				$querynormal = $client->doInvoke('showqueryfromwsdoquery', array('query'=>$query));
-				echo 'SQL QUERY<br><div style="word-break:normal;border:1px solid;padding:4px;margin:4px;">'. $querynormal['sql'].'</div>';
+				echo 'SQL QUERY<br><div style="word-break:break-all;border:1px solid;padding:4px;margin:4px;">'. $querynormal['sql'].'</div>';
 				if (is_array($result)) {
 					if (count($result)==0) {
 						echo "<div class='alert alert-info'><strong>No results found!</strong></div>";
