@@ -4,9 +4,14 @@
 //    and give the correct email and password.
 // This method returns a valid logged in session with the internal "portal" user
 
-$email = 'joe@tsolucio.com';
-$password = '6zdfda3f';
-$params = "operation=loginPortal&username=$email&password=$password";
+$email = 'julieta@yahoo.com';
+$password = '5ub1ipv3';
+
+//getchallenge using library
+$chlg = $cbconn->__doChallenge($email);
+$generatedKey = $chlg.$password;
+
+$params = "operation=loginPortal&username=$email&password=$generatedKey";
 $response = $httpc->fetch_url("$cbURL?$params");
 $dmsg.= debugmsg("Raw response (json) Query",$response);
 
@@ -15,13 +20,14 @@ $jsonResponse = json_decode($response, true);
 $dmsg.= debugmsg("Webservice response loginPortal",$jsonResponse);
 
 if($jsonResponse['success']==false) {
-	$dmsg.= debugmsg('loginPortal failed: '.$jsonResponse['message']);
+	$dmsg.= debugmsg('loginPortal failed: '.$jsonResponse['error']['message']);
 	echo 'loginPortal failed!';
 } else {
 	if (!$jsonResponse['result']) {
 		echo 'Contact with email '.$email.' could <b>NOT</b> be logged in correctly!';
 	} else {
-		echo 'Contact with ID '.$jsonResponse['result'].' has been logged in correctly!';
+		echo 'Contact has been logged in correctly!';
+		var_dump($jsonResponse['result']);
 	}
 }
 ?>
