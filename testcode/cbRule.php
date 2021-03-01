@@ -1,4 +1,4 @@
-<? php
+<?php
 $context = array(
 	'guestcount' => '4',
 	'season' => 'Winter',
