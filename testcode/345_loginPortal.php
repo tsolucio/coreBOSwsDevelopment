@@ -7,9 +7,13 @@
 $email = 'julieta@yahoo.com';
 $password = '5ub1ipv3';
 
-//getchallenge using library
-$chlg = $cbconn->__doChallenge($email);
-$generatedKey = $chlg.$password;
+//getchallenge
+$response = $httpc->fetch_url("$cbURL?operation=getchallenge&username=$email");
+$dmsg = debugmsg("Raw response (json) GetChallenge",$response);
+
+//decode the json encode response from the server.
+$jsonResponse = json_decode($response,true);
+$generatedKey = $jsonResponse['result']['token'].$password;
 
 $params = "operation=loginPortal&username=$email&password=$generatedKey";
 $response = $httpc->fetch_url("$cbURL?$params");
