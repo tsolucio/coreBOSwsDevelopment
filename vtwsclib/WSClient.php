@@ -55,9 +55,13 @@ class Vtiger_WSClient {
 	/**
 	 * Constructor.
 	 */
-	public function __construct($url) {
+	public function __construct($url, $username = false, $userAccesskey = false, $sessionName = false, $userId = false) {
 		$this->_serviceurl = $this->getWebServiceURL($url);
 		$this->_client = new cbHTTP_Client($this->_serviceurl);
+		$this->_serviceuser = $username;
+		$this->_servicekey  = $userAccesskey;
+		$this->_userid      = $userId;
+		$this->_sessionid   = $sessionName;
 	}
 
 	/**
