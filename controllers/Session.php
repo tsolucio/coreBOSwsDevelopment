@@ -8,29 +8,28 @@
  * All Rights Reserved.
  ************************************************************************************/
 class Session_Controller {
-	
-	static function start() {
+
+	public static function start() {
 		@session_start();
 	}
-	
-	static function destroy() {
+
+	public static function destroy() {
 		@session_destroy();
 	}
-	
-	static function setLoginContext($loginModel) {
+
+	public static function setLoginContext($loginModel) {
 		$_SESSION['vtbrowser_auth'] = $loginModel;
 	}
-	
-	static function getLoginContext() {
-		if(self::hasLoginContext()) {
+
+	public static function getLoginContext() {
+		if (self::hasLoginContext()) {
 			return $_SESSION['vtbrowser_auth'];
 		}
 		return false;
 	}
-	
-	static function hasLoginContext() {
+
+	public static function hasLoginContext() {
 		return isset($_SESSION['vtbrowser_auth']);
 	}
-	
 }
 ?>

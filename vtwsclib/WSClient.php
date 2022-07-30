@@ -24,7 +24,7 @@ require_once $coreBOS_Basedir.'/Net/HTTP_Client.php';
  */
 class Vtiger_WSClient {
 	// Webservice file
-	private $_servicebase = 'webservice.php';
+	public $_servicebase = 'webservice.php';
 
 	// HTTP Client instance
 	public $_client = false;
