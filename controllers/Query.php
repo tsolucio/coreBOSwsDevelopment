@@ -35,43 +35,42 @@ class Query_Controller {
 
 		if (!empty($query)) {
 			$loginModel = Session_Controller::getLoginContext();
-
-			$client = new Vtiger_WSClient($loginModel->getURL());
-			$login  = $client->doLogin($loginModel->getUsername(), $loginModel->getAccessKey(), $loginModel->getWithPassword());
-
-			if ($login) {
-				$result = $client->doQuery($query);
-				$querynormal = $client->doInvoke('showqueryfromwsdoquery', array('query'=>$query));
-				echo 'SQL QUERY<br><div style="word-break:break-all;border:1px solid;padding:4px;margin:4px;">'. $querynormal['sql'].'</div>';
-				if (is_array($result)) {
-					if (count($result)==0) {
-						echo "<div class='alert alert-info'><strong>No results found!</strong></div>";
-					} else {
-						echo "<table cellpadding='3' cellspacing='0' class='table table-striped small'>";
-						$columns = $client->getResultColumns($result);
+			$client = new Vtiger_WSClient(
+				$loginModel->getURL(),
+				$loginModel->getUsername(),
+				$loginModel->getAccessKey(),
+				$loginModel->getSessionId(),
+				$loginModel->getUserId()
+			);
+			$result = $client->doQuery($query);
+			$querynormal = $client->doInvoke('showqueryfromwsdoquery', array('query'=>$query));
+			echo 'SQL QUERY<br><div style="word-break:break-all;border:1px solid;padding:4px;margin:4px;">'. $querynormal['sql'].'</div>';
+			if (is_array($result)) {
+				if (count($result)==0) {
+					echo "<div class='alert alert-info'><strong>No results found!</strong></div>";
+				} else {
+					echo "<table cellpadding='3' cellspacing='0' class='table table-striped small'>";
+					$columns = $client->getResultColumns($result);
+					echo '<tr>';
+					foreach ($columns as $column) {
+						echo sprintf("<th nowrap='nowrap'>%s</th>", $column);
+					}
+					echo '</tr>';
+					foreach ($result as $row) {
 						echo '<tr>';
-						foreach ($columns as $column) {
-							echo sprintf("<th nowrap='nowrap'>%s</th>", $column);
+						foreach ($row as $k => $v) {
+							if ($v === '') {
+								$v = '&nbsp;';
+							}
+							echo sprintf("<td nowrap='nowrap'>%s</td>", $v);
 						}
 						echo '</tr>';
-						foreach ($result as $row) {
-							echo '<tr>';
-							foreach ($row as $k => $v) {
-								if ($v === '') {
-									$v = '&nbsp;';
-								}
-								echo sprintf("<td nowrap='nowrap'>%s</td>", $v);
-							}
-							echo '</tr>';
-						}
-						echo '</table>';
 					}
-				} else {
-					$lastError = $client->lastError();
-					echo "<div class='alert alert-danger'><strong>ERROR:</strong> " . $lastError['message'] . '</div>';
+					echo '</table>';
 				}
 			} else {
-				echo "<div class='alert alert-danger'><strong>ERROR:</strong> Login failure!</div>";
+				$lastError = $client->lastError();
+				echo "<div class='alert alert-danger'><strong>ERROR:</strong> " . $lastError['message'] . '</div>';
 			}
 		}
 	}
