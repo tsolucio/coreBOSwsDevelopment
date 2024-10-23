@@ -19,12 +19,17 @@ class Header_Controller {
 				<title>".Header_Controller::$title."</title>
 				<script type='text/javascript'>
 				function validateForm(form) {
-					if(form.q.value == '') return false;
-					
+					if (form.q.value == '') {
+						return false;
+					}
 					form.__submitButton.value = 'Executing';
 					form.__submitButton.disabled = true;
-					
 					return true;
+				}
+				function handleCtrlEnter(event) {
+					if (event.ctrlKey && event.key === 'Enter') {
+						document.getElementById('queryform').submit();
+					}
 				}
 				</script>".Header_Controller::getHeaderScripts()."
 			</head>
