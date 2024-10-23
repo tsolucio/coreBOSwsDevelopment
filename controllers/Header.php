@@ -26,6 +26,11 @@ class Header_Controller {
 					form.__submitButton.disabled = true;
 					return true;
 				}
+				function handleCtrlEnter(event) {
+					if (event.ctrlKey && event.key === 'Enter') {
+						document.getElementById('queryform').submit();
+					}
+				}
 				</script>".Header_Controller::getHeaderScripts()."
 			</head>
 		<body>".Header_Controller::getMenu()."
