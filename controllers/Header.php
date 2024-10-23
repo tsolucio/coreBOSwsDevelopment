@@ -74,7 +74,8 @@ class Header_Controller {
 			$loginModel = Session_Controller::getLoginContext();
 			$title = 'URL: '.$loginModel->getURL()."          \n";
 			$title.= 'User: '.$loginModel->getUsername().' ('.$loginModel->getUserId().")\n";
-			$title.= 'Key: '.$loginModel->getAccessKey();
+			$title.= 'Key: '.$loginModel->getAccessKey()."\n";
+			$title.= 'Session: '.$loginModel->getSessionId();
 			$rdo.= sprintf("<li><a href='#'><small><abbr title='%s'>Welcome <b>%s</b></abbr></small></a></li>", $title, $loginModel->getUsername());
 			$rdo.= "<li><a href='index.php?action=Logout'>Logout</a></li>";
 		}
