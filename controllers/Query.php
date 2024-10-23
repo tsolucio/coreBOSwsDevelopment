@@ -18,7 +18,7 @@ class Query_Controller {
 		}
 		$escapedQuery = $query;
 		echo "
-		<form method='POST' action='index.php' onsubmit='return validateForm(this);'>
+		<form method='POST' action='index.php' onsubmit='return validateForm(this);' id='queryform' onkeydown='handleCtrlEnter(event)'>
 			<table cellpadding='0' cellspacing='1'>
 				<tr valign=top>
 					<td>
